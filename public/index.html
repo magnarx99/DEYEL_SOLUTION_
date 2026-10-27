@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PQRDS | Gobernación de Antioquia</title>
+  <meta name="description" content="Presente peticiones, quejas, reclamos, sugerencias y denuncias ante la Gobernación de Antioquia. Registre sus datos una sola vez.">
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/inicio.js"></script>
+</head>
+<body data-pagina="inicio">
+  <main id="contenido">
+    <section class="portada">
+      <div class="contenedor">
+        <div>
+          <h1>Presente su solicitud a la Gobernación de Antioquia</h1>
+          <p>Sus datos personales se registran una sola vez. En sus próximas solicitudes, el sistema lo reconoce por su número de cédula y solo le pide el nuevo caso.</p>
+          <div class="panel">
+            <h2>Empiece con su cédula</h2>
+            <p class="texto-suave texto-chico">Escriba su número de documento sin puntos ni espacios. Después elegirá el tipo de solicitud.</p>
+            <form id="form-inicio" class="formulario" novalidate>
+              <div class="cedula-caja">
+                <div class="campo">
+                  <label for="cedula-inicio">Número de cédula</label>
+                  <input class="campo-cedula" id="cedula-inicio" name="cedula" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="Solo números" required>
+                  <span class="error-campo">El documento debe tener de 6 a 10 dígitos.</span>
+                </div>
+                <button class="boton" type="submit">Continuar</button>
+              </div>
+            </form>
+            <p class="texto-chico texto-suave" style="margin:16px 0 0">¿Quiere denunciar sin identificarse? <a href="/radicar.html?tipo=DENUNCIA&amp;anonima=1">Presente una denuncia anónima</a>.</p>
+          </div>
+        </div>
+        <div class="portada-imagen">
+          <img src="/img/ilustracion-inicio.svg" alt="Ilustración de un pueblo antioqueño entre montañas, con una solicitud radicada y el asistente virtual" width="560" height="440">
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+        <h2>Cómo funciona</h2>
+        <div class="principio paso-ilustrado">
+          <div>
+            <img src="/img/paso-1.svg" alt="" width="120" height="96">
+            <h3>1. Elija el tipo de solicitud</h3>
+            <p>Petición, queja, reclamo, sugerencia, felicitación, denuncia, información, datos personales o cita.</p>
+          </div>
+          <div>
+            <img src="/img/paso-2.svg" alt="" width="120" height="96">
+            <h3>2. Identifíquese con su cédula</h3>
+            <p>Si ya presentó solicitudes antes, sus datos aparecen cargados. Si es la primera vez, los escribe una sola vez.</p>
+          </div>
+          <div>
+            <img src="/img/paso-3.svg" alt="" width="120" height="96">
+            <h3>3. Describa su caso y radique</h3>
+            <p>Recibe un número de radicado y la fecha límite de respuesta, calculada en días hábiles.</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top:56px">Otros servicios</h2>
+        <div class="accesos">
+          <a class="acceso" href="/seguimiento.html">
+            <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-search"></use></svg>
+            <div><strong>Consultar un radicado</strong><span>Vea el estado y la respuesta de su solicitud.</span></div>
+          </a>
+          <a class="acceso" href="/registro.html">
+            <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-user-plus"></use></svg>
+            <div><strong>Crear una cuenta</strong><span>Siga todas sus solicitudes desde un solo lugar.</span></div>
+          </a>
+          <a class="acceso" href="/politica-datos.html">
+            <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-shield-check"></use></svg>
+            <div><strong>Protección de sus datos</strong><span>Cómo usamos y cuidamos su información personal.</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

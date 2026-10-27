@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipos de solicitud | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/pqrds.js"></script>
+</head>
+<body data-pagina="radicar" data-migas='[["Inicio","/"],["PQRDS"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="cabecera-pagina cabecera-ilustrada">
+        <div>
+          <h1>Realizar peticiones, quejas, reclamos, sugerencias y denuncias</h1>
+          <p>Elija el tipo de solicitud que desea presentar. Si no está seguro, toque el signo de pregunta para ver un ejemplo o consulte al asistente virtual.</p>
+        </div>
+        <img src="/img/paso-1.svg" alt="" width="150" height="120">
+      </div>
+
+      <div id="aviso-cedula"></div>
+
+      <div class="campo filtro-tipos">
+        <label for="filtro" class="sr-only">Buscar tipo de solicitud</label>
+        <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-search"></use></svg>
+        <input id="filtro" type="search" placeholder="Buscar: queja, información, cita…" autocomplete="off">
+      </div>
+
+      <ul class="lista-tipos" id="lista-tipos" aria-live="polite">
+        <li class="esqueleto">Cargando tipos de solicitud…</li>
+      </ul>
+
+      <section class="seguimiento-caja" aria-labelledby="titulo-seguimiento">
+        <div>
+          <h2 id="titulo-seguimiento">Haga seguimiento a su solicitud</h2>
+          <p>Use el número de radicado que recibió al presentar su solicitud.</p>
+        </div>
+        <a class="boton" href="/seguimiento.html">Hacer seguimiento</a>
+      </section>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

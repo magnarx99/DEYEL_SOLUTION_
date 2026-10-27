@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consultar radicado | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/seguimiento.js"></script>
+</head>
+<body data-pagina="seguimiento" data-migas='[["Inicio","/"],["Consultar radicado"]]'>
+  <main id="contenido">
+    <div class="contenedor contenedor-angosto">
+      <div class="cabecera-pagina cabecera-ilustrada">
+        <div>
+          <h1>Consultar el estado de su solicitud</h1>
+          <p>Escriba el número de radicado que recibió y el documento de quien presentó la solicitud.</p>
+        </div>
+        <img src="/img/paso-2.svg" alt="" width="150" height="120">
+      </div>
+
+      <form class="panel formulario" id="form-seguimiento" novalidate>
+        <div class="rejilla">
+          <div class="campo">
+            <label for="radicado">Número de radicado<span class="obligatorio" aria-hidden="true">*</span></label>
+            <input id="radicado" name="radicado" required autocomplete="off" placeholder="PQRDS-2026-000123" maxlength="17">
+            <span class="error-campo">Use el formato PQRDS-AAAA-000000.</span>
+          </div>
+          <div class="campo" id="caja-cedula">
+            <label for="cedula-seg">Número de cédula<span class="obligatorio" aria-hidden="true">*</span></label>
+            <input id="cedula-seg" name="cedula" inputmode="numeric" maxlength="10" autocomplete="off">
+            <span class="error-campo">El documento debe tener de 6 a 10 dígitos.</span>
+          </div>
+          <div class="campo" id="caja-codigo" hidden>
+            <label for="codigo">Código de la denuncia anónima<span class="obligatorio" aria-hidden="true">*</span></label>
+            <input id="codigo" name="codigo" maxlength="12" autocomplete="off" style="text-transform:uppercase">
+            <span class="error-campo">Escriba el código que recibió al radicar.</span>
+          </div>
+        </div>
+        <label class="casilla texto-chico" style="margin-top:16px" for="es-anonima">
+          <input type="checkbox" id="es-anonima"> <span>Mi solicitud fue una denuncia anónima</span>
+        </label>
+        <div id="mensaje" style="margin-top:16px"></div>
+        <div class="acciones">
+          <button class="boton" type="submit" id="consultar" data-cargando="Consultando…">
+            <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-search"></use></svg>Consultar
+          </button>
+        </div>
+      </form>
+
+      <section id="resultado-seguimiento" aria-live="polite" style="margin-top:24px"></section>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

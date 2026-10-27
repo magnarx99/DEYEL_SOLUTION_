@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/registro.js"></script>
+</head>
+<body data-pagina="registro" data-migas='[["Inicio","/"],["Iniciar sesión","/login.html"],["Crear cuenta"]]'>
+  <main id="contenido">
+    <div class="contenedor contenedor-angosto">
+      <div class="cabecera-pagina">
+        <h1>Crear cuenta</h1>
+        <p>Registre sus datos una sola vez. Con su cuenta podrá ver el estado de todas sus solicitudes. Si ya radicó antes con su cédula, la cuenta se vinculará a esas solicitudes.</p>
+      </div>
+
+      <div class="pasos">
+        <div class="pasos-texto"><span>Paso <strong id="paso-actual">1</strong> de 5</span><span id="paso-nombre">Identificación</span></div>
+        <div class="pasos-barra" role="progressbar" aria-label="Avance del registro" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><span id="barra" style="width:20%"></span></div>
+        <ol class="pasos-lista">
+          <li data-paso="1">Identificación</li>
+          <li data-paso="2">Datos personales</li>
+          <li data-paso="3">Ubicación y contacto</li>
+          <li data-paso="4">Datos de acceso</li>
+          <li data-paso="5">Autorizaciones</li>
+        </ol>
+      </div>
+
+      <form class="panel formulario" id="form-registro" novalidate>
+        <p class="leyenda-obligatorio">Los campos marcados con <span class="obligatorio">*</span> son obligatorios.</p>
+        <section data-paso="1" aria-labelledby="h-1"><h2 id="h-1" tabindex="-1">Identificación</h2><div id="b-identificacion"></div></section>
+        <section data-paso="2" aria-labelledby="h-2" hidden><h2 id="h-2" tabindex="-1">Datos personales</h2><div id="b-personal"></div></section>
+        <section data-paso="3" aria-labelledby="h-3" hidden><h2 id="h-3" tabindex="-1">Ubicación y contacto</h2><div id="b-contacto"></div></section>
+        <section data-paso="4" aria-labelledby="h-4" hidden>
+          <h2 id="h-4" tabindex="-1">Datos de acceso</h2>
+          <p class="texto-suave">Su usuario para iniciar sesión será el correo <strong id="correo-usuario"></strong>. También podrá ingresar con su número de cédula.</p>
+          <div class="rejilla">
+            <div class="campo">
+              <label for="f-password">Contraseña<span class="obligatorio" aria-hidden="true">*</span></label>
+              <div class="con-boton">
+                <input id="f-password" name="password" type="password" autocomplete="new-password" required maxlength="72" aria-describedby="ay-password">
+                <button type="button" data-ver-password aria-label="Mostrar contraseña"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-eye"></use></svg></button>
+              </div>
+              <div class="fortaleza" aria-hidden="true"><span id="barra-fortaleza"></span></div>
+              <span class="fortaleza-texto" id="texto-fortaleza" aria-live="polite"></span>
+              <span class="ayuda" id="ay-password">Mínimo 8 caracteres, con una mayúscula, un número y un símbolo.</span>
+              <span class="error-campo"></span>
+            </div>
+            <div class="campo">
+              <label for="f-confirmar_password">Confirmar contraseña<span class="obligatorio" aria-hidden="true">*</span></label>
+              <div class="con-boton">
+                <input id="f-confirmar_password" name="confirmar_password" type="password" autocomplete="new-password" required maxlength="72">
+                <button type="button" data-ver-password aria-label="Mostrar contraseña"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-eye"></use></svg></button>
+              </div>
+              <span class="error-campo"></span>
+            </div>
+          </div>
+        </section>
+        <section data-paso="5" aria-labelledby="h-5" hidden><h2 id="h-5" tabindex="-1">Autorizaciones</h2><div id="b-autorizacion"></div></section>
+
+        <div id="mensaje" style="margin-top:20px"></div>
+        <div class="acciones acciones-entre">
+          <button type="button" class="boton boton-secundario" id="anterior" hidden>Anterior</button>
+          <span></span>
+          <button type="button" class="boton" id="siguiente">Siguiente</button>
+          <button type="submit" class="boton" id="crear" data-cargando="Creando cuenta…" hidden>Crear cuenta</button>
+        </div>
+      </form>
+      <p class="texto-chico texto-suave" style="margin-top:16px">¿Ya tiene cuenta? <a href="/login.html">Inicie sesión</a>.</p>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

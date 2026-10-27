@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi cuenta | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/mi-cuenta.js"></script>
+</head>
+<body data-pagina="cuenta" data-migas='[["Inicio","/"],["Mi cuenta"]]'>
+  <main id="contenido">
+    <div class="contenedor contenedor-angosto">
+      <div class="cabecera-pagina">
+        <h1>Mi cuenta</h1>
+        <p>Mantenga sus datos al día. Se usarán automáticamente en todas sus próximas solicitudes.</p>
+      </div>
+      <form class="panel formulario" id="form-cuenta" novalidate>
+        <div class="ficha" style="margin:0 0 24px">
+          <dl class="ficha-datos">
+            <div><dt>Documento</dt><dd id="dato-documento"></dd></div>
+            <div><dt>Fecha de expedición</dt><dd id="dato-expedicion"></dd></div>
+            <div><dt>Registrado desde</dt><dd id="dato-desde"></dd></div>
+          </dl>
+        </div>
+        <fieldset><legend>Datos personales</legend><div id="b-personal"></div></fieldset>
+        <fieldset><legend>Ubicación y contacto</legend><div id="b-contacto"></div></fieldset>
+        <fieldset>
+          <legend>Avisos</legend>
+          <div class="opciones" role="radiogroup" aria-label="Cómo prefiere recibir avisos">
+            <label class="opcion"><input type="radio" name="notificacion_preferida" value="CORREO"> Correo electrónico</label>
+            <label class="opcion"><input type="radio" name="notificacion_preferida" value="SMS"> Mensaje de texto (SMS)</label>
+          </div>
+        </fieldset>
+        <div id="mensaje"></div>
+        <div class="acciones acciones-entre">
+          <a href="/cambiar-password.html" class="boton boton-secundario"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-lock"></use></svg>Cambiar contraseña</a>
+          <button class="boton" type="submit" id="guardar" data-cargando="Guardando…">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

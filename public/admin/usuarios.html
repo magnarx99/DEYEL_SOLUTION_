@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Usuarios | Panel PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin-usuarios.js"></script>
+</head>
+<body data-pagina="panel" data-sin-chat data-migas='[["Panel de gestión","/admin/"],["Usuarios"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="panel-cabecera">
+        <div><h1>Usuarios</h1><p>Cree funcionarios, cambie roles y active o desactive cuentas.</p></div>
+        <button class="boton" type="button" id="nuevo"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-user-plus"></use></svg>Crear funcionario</button>
+      </div>
+      <form class="panel formulario" id="filtros" style="padding:20px" novalidate>
+        <div class="barra-filtros">
+          <div class="campo"><label for="q">Buscar</label><input id="q" name="q" placeholder="Nombre, correo o cédula"></div>
+          <div class="campo"><label for="rol">Rol</label><select id="rol" name="rol"><option value="">Todos</option><option value="ADMIN">Administrador</option><option value="FUNCIONARIO">Funcionario</option><option value="CIUDADANO">Ciudadano</option></select></div>
+        </div>
+      </form>
+      <div class="resumen-filtros"><span id="total"></span></div>
+      <div class="tabla-envoltura"><table class="tabla">
+        <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Dependencia</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="filas"></tbody></table></div>
+      <dialog class="modal" id="modal-usuario" aria-labelledby="t-usuario" style="width:min(560px,calc(100vw - 24px))">
+        <div class="modal-cabecera"><h2 id="t-usuario">Crear funcionario</h2><button type="button" class="cerrar" data-cerrar aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-x"></use></svg></button></div>
+        <form class="modal-cuerpo formulario" id="form-usuario" novalidate>
+          <div class="campo"><label for="u-nombre">Nombre completo<span class="obligatorio">*</span></label><input id="u-nombre" name="nombre" required maxlength="120"><span class="error-campo"></span></div>
+          <div class="campo" style="margin-top:12px"><label for="u-correo">Correo institucional<span class="obligatorio">*</span></label><input id="u-correo" name="correo" type="email" required><span class="error-campo"></span></div>
+          <div class="rejilla" style="margin-top:12px">
+            <div class="campo"><label for="u-rol">Rol<span class="obligatorio">*</span></label><select id="u-rol" name="rol"><option value="FUNCIONARIO">Funcionario</option><option value="ADMIN">Administrador</option></select><span class="error-campo"></span></div>
+            <div class="campo"><label for="u-dependencia">Dependencia</label><select id="u-dependencia" name="id_dependencia"></select><span class="error-campo"></span></div>
+          </div>
+          <div class="campo" style="margin-top:12px"><label for="u-password">Contraseña temporal<span class="obligatorio">*</span></label>
+            <div class="con-boton"><input id="u-password" name="password" type="password" autocomplete="new-password" required><button type="button" data-ver-password aria-label="Mostrar contraseña"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-eye"></use></svg></button></div>
+            <span class="ayuda">El funcionario deberá cambiarla al ingresar por primera vez.</span><span class="error-campo"></span></div>
+          <div id="u-mensaje" style="margin-top:12px"></div>
+          <div class="acciones"><button class="boton" type="submit" data-cargando="Creando…">Crear usuario</button><button class="boton boton-secundario" type="button" data-cerrar>Cancelar</button></div>
+        </form>
+      </dialog>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

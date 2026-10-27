@@ -1,0 +1,17 @@
+VISTA PREVIA DEL PORTAL PQRDS
+=============================
+
+Vista_previa_Portal_PQRDS.html es una copia del portal que funciona sola:
+ábrala con doble clic (o clic derecho > Abrir con > Chrome / Edge) y se verá
+en el navegador sin instalar Node.js ni PostgreSQL.
+
+- Use la barra "Ver como" (arriba) para ver el portal como Visitante,
+  Ciudadana, Funcionario o Administrador.
+- Los datos son ficticios y viven en la memoria del navegador: se borran
+  al recargar la página.
+- El botón "Descargar en Excel" descarga un archivo CSV (Excel lo abre).
+  El portal real genera un .xlsx con dos hojas.
+
+Esta vista previa es un solo archivo grande que reúne estilos, íconos,
+imágenes, datos y lógica. Para estudiar o modificar el código organizado,
+use las carpetas del proyecto (public/, src/, database/), no este archivo.

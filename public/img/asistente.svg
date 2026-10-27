@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ana, asistente virtual">
+  <defs>
+    <linearGradient id="fa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DCEAF7"/><stop offset="1" stop-color="#BFE0DC"/></linearGradient>
+    <clipPath id="ca"><circle cx="32" cy="32" r="32"/></clipPath>
+  </defs>
+  <circle cx="32" cy="32" r="32" fill="url(#fa)"/>
+  <g clip-path="url(#ca)">
+    <path d="M10 64 C12 50 21 44 32 44 C43 44 52 50 54 64 Z" fill="#2B5C8A"/>
+    <path d="M27 44 L32 51 L37 44 Z" fill="#FFFFFF"/>
+    <rect x="28" y="36" width="8" height="9" rx="3" fill="#E9B894"/>
+    <path d="M18 30 C17 16 25 11 32 11 C40 11 47 16 46 30 C46 37 44 42 44 46 L40 40 L24 40 L20 46 C20 42 18 37 18 30 Z" fill="#4A3B35"/>
+    <ellipse cx="32" cy="29" rx="11" ry="12.5" fill="#F1C7A5"/>
+    <path d="M21 26 C23 17 31 15 38 18 C41 19 43 22 43 26 C38 22 30 21 21 26 Z" fill="#4A3B35"/>
+    <circle cx="27.5" cy="30" r="1.6" fill="#2A3645"/><circle cx="36.5" cy="30" r="1.6" fill="#2A3645"/>
+    <path d="M28 35 Q32 38.5 36 35" stroke="#B5525F" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <circle cx="25" cy="34" r="2" fill="#F2A7A0" opacity=".5"/><circle cx="39" cy="34" r="2" fill="#F2A7A0" opacity=".5"/>
+    <path d="M19 29 C19 19 25 15 32 15 C39 15 45 19 45 29" stroke="#2B5C8A" stroke-width="2.4" fill="none"/>
+    <rect x="16" y="26" width="6" height="9" rx="3" fill="#4FA3A5"/>
+    <rect x="42" y="26" width="6" height="9" rx="3" fill="#4FA3A5"/>
+    <path d="M45 34 C45 39 41 40 36 40" stroke="#2B5C8A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <circle cx="35.5" cy="40" r="1.8" fill="#2B5C8A"/>
+  </g>
+</svg>

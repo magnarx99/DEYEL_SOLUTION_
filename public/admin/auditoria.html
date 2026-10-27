@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auditoría | Panel PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin-auditoria.js"></script>
+</head>
+<body data-pagina="panel" data-sin-chat data-migas='[["Panel de gestión","/admin/"],["Auditoría"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="panel-cabecera">
+        <div><h1>Bitácora de auditoría</h1><p>Registro de consultas, exportaciones y cambios sobre datos personales y solicitudes.</p></div>
+        <div class="campo"><label for="accion">Acción</label><select id="accion">
+          <option value="">Todas</option><option value="CONSULTA_CEDULA">Consulta por cédula</option><option value="BUSCAR_CEDULA">Búsqueda al radicar</option>
+          <option value="VER_PQRDS">Ver solicitud</option><option value="GESTIONAR_PQRDS">Gestionar solicitud</option><option value="EXPORTAR_EXCEL">Exportar Excel</option>
+          <option value="ACTUALIZAR_CIUDADANO">Actualizar ciudadano</option><option value="RADICAR_EN_NOMBRE">Radicar en nombre</option>
+          <option value="DESCARGAR_ADJUNTO">Descargar adjunto</option><option value="CREAR_USUARIO">Crear usuario</option><option value="ACTUALIZAR_USUARIO">Actualizar usuario</option></select></div>
+      </div>
+      <div class="tabla-envoltura"><table class="tabla">
+        <thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Detalle</th><th>IP</th></tr></thead>
+        <tbody id="filas"></tbody></table></div>
+      <div class="paginacion"><span id="pagina-texto"></span><div>
+        <button type="button" class="boton boton-secundario boton-chico" id="anterior">Anterior</button>
+        <button type="button" class="boton boton-secundario boton-chico" id="siguiente">Siguiente</button></div></div>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

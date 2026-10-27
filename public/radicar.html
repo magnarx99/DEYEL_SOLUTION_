@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radicar solicitud | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/autocompletado.js"></script>
+</head>
+<body data-pagina="radicar" data-migas='[["Inicio","/"],["PQRDS","/pqrds.html"],["Radicar solicitud"]]'>
+  <main id="contenido">
+    <div class="contenedor contenedor-angosto">
+      <div class="cabecera-pagina">
+        <h1 id="titulo">Radicar solicitud</h1>
+        <p id="subtitulo">Complete los tres pasos. Los campos con <span class="obligatorio">*</span> son obligatorios.</p>
+      </div>
+
+      <div class="pasos no-imprimir" id="pasos">
+        <div class="pasos-texto"><span>Paso <strong id="paso-actual">1</strong> de 3</span><span id="paso-nombre">Identificación</span></div>
+        <div class="pasos-barra" role="progressbar" aria-label="Avance del formulario" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span id="barra" style="width:33%"></span></div>
+        <ol class="pasos-lista">
+          <li data-paso="1">1. Identificación</li>
+          <li data-paso="2">2. Detalle del caso</li>
+          <li data-paso="3">3. Revisar y radicar</li>
+        </ol>
+      </div>
+
+      <form id="form-radicar" class="formulario" novalidate>
+        <!-- PASO 1: identificación por cédula -->
+        <section class="panel" id="paso-1" aria-labelledby="t-paso-1">
+          <div class="panel-titulo"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-id-card"></use></svg><h2 id="t-paso-1">Identificación</h2></div>
+          <p class="panel-descripcion" id="desc-paso-1">Escriba su número de cédula y presione Buscar. Si ya ha presentado solicitudes, sus datos aparecerán cargados y no tendrá que escribirlos de nuevo.</p>
+
+          <div class="campo oculto" id="caja-anonima" style="margin-bottom:20px">
+            <label class="casilla" for="anonima">
+              <input type="checkbox" id="anonima" name="anonima">
+              <span><strong>Presentar de forma anónima.</strong> No le pediremos cédula. Recibirá un radicado y un código para consultar el estado; no podremos contactarlo.</span>
+            </label>
+          </div>
+
+          <div id="caja-busqueda">
+            <div class="cedula-caja">
+              <div class="campo">
+                <label for="cedula">Número de cédula<span class="obligatorio" aria-hidden="true">*</span></label>
+                <input class="campo-cedula" id="cedula" name="cedula" inputmode="numeric" autocomplete="off" maxlength="10" required aria-describedby="er-cedula-b">
+                <span class="error-campo" id="er-cedula-b" aria-live="polite">El documento debe tener de 6 a 10 dígitos.</span>
+              </div>
+              <button class="boton" type="button" id="buscar" data-cargando="Buscando…">
+                <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-search"></use></svg>Buscar
+              </button>
+            </div>
+          </div>
+
+          <div id="estado-busqueda" aria-live="polite" style="margin-top:16px"></div>
+          <div id="resultado"></div>
+
+          <div class="acciones acciones-entre">
+            <a class="boton boton-secundario" href="/pqrds.html">Cambiar tipo de solicitud</a>
+            <button class="boton" type="button" id="ir-paso-2" disabled>Continuar al detalle del caso</button>
+          </div>
+        </section>
+
+        <!-- PASO 2: detalle del caso -->
+        <section class="panel" id="paso-2" aria-labelledby="t-paso-2" hidden>
+          <div class="panel-titulo"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-file-pen-line"></use></svg><h2 id="t-paso-2">Detalle del caso</h2></div>
+          <p class="panel-descripcion">Cuéntenos qué necesita. Sea claro y concreto: indique qué pasó, cuándo y dónde.</p>
+
+          <div id="resumen-identidad"></div>
+
+          <fieldset>
+            <legend>Clasificación</legend>
+            <div class="rejilla">
+              <div class="campo">
+                <label for="f-tipo">Tipo de solicitud<span class="obligatorio" aria-hidden="true">*</span></label>
+                <select id="f-tipo" name="tipo" required></select>
+                <span class="ayuda" id="plazo-tipo"></span>
+                <span class="error-campo"></span>
+              </div>
+              <div class="campo">
+                <label for="f-id_dependencia">Dependencia destinataria</label>
+                <select id="f-id_dependencia" name="id_dependencia"></select>
+                <span class="ayuda">Si no sabe cuál es, la entidad la asigna por usted.</span>
+                <span class="error-campo"></span>
+              </div>
+              <div class="campo">
+                <label for="f-municipio_hecho">Municipio donde ocurre el hecho<span class="obligatorio" aria-hidden="true">*</span></label>
+                <select id="f-municipio_hecho" name="municipio_hecho" required></select>
+                <span class="error-campo"></span>
+              </div>
+              <div class="campo oculto" id="caja-canal">
+                <label for="f-canal">Canal de recepción</label>
+                <select id="f-canal" name="canal">
+                  <option value="PRESENCIAL">Atención presencial</option>
+                  <option value="TELEFONICO">Atención telefónica</option>
+                  <option value="WEB">Portal web</option>
+                </select>
+                <span class="ayuda">Solo para funcionarios que radican en nombre del ciudadano.</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset id="caja-cita" hidden>
+            <legend>Datos de la cita</legend>
+            <div class="rejilla">
+              <div class="campo">
+                <label for="f-fecha_cita_preferida">Fecha preferida<span class="obligatorio" aria-hidden="true">*</span></label>
+                <input type="date" id="f-fecha_cita_preferida" name="fecha_cita_preferida">
+                <span class="ayuda">La dependencia le confirmará la fecha y la hora.</span>
+                <span class="error-campo"></span>
+              </div>
+              <div class="campo">
+                <span class="etiqueta" id="et-modalidad">Modalidad<span class="obligatorio" aria-hidden="true">*</span></span>
+                <div class="opciones" role="radiogroup" aria-labelledby="et-modalidad">
+                  <label class="opcion"><input type="radio" name="modalidad_cita" value="PRESENCIAL"> Presencial</label>
+                  <label class="opcion"><input type="radio" name="modalidad_cita" value="VIRTUAL"> Virtual</label>
+                </div>
+                <span class="error-campo"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Descripción</legend>
+            <div class="campo">
+              <label for="f-asunto">Asunto<span class="obligatorio" aria-hidden="true">*</span></label>
+              <input id="f-asunto" name="asunto" maxlength="150" required placeholder="Resuma su solicitud en una frase">
+              <div class="fila-ayuda"><span class="error-campo"></span><span class="contador" id="cont-asunto"></span></div>
+            </div>
+            <div class="campo" style="margin-top:16px">
+              <label for="f-descripcion">Descripción detallada<span class="obligatorio" aria-hidden="true">*</span></label>
+              <textarea id="f-descripcion" name="descripcion" maxlength="3000" required placeholder="Describa los hechos: qué pasó, cuándo, dónde y qué solicita a la entidad."></textarea>
+              <div class="fila-ayuda"><span class="error-campo"></span><span class="contador" id="cont-descripcion"></span></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Documentos de soporte (opcional)</legend>
+            <div class="zona-archivos" id="zona-archivos" tabindex="0" role="button" aria-describedby="ayuda-archivos">
+              <svg class="icono-l" aria-hidden="true"><use href="/img/iconos.svg#i-upload"></use></svg>
+              <div><strong>Arrastre sus archivos aquí</strong> o haga clic para seleccionarlos</div>
+              <div class="texto-chico" id="ayuda-archivos">PDF, JPG o PNG. Máximo 5 archivos de 5 MB cada uno.</div>
+            </div>
+            <input type="file" id="archivos" multiple accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" hidden>
+            <ul class="lista-archivos" id="lista-archivos"></ul>
+            <div id="error-archivos" aria-live="polite"></div>
+          </fieldset>
+
+          <fieldset id="caja-medio">
+            <legend>Respuesta</legend>
+            <div class="campo">
+              <span class="etiqueta" id="et-medio">¿Cómo quiere recibir la respuesta?<span class="obligatorio" aria-hidden="true">*</span></span>
+              <div class="opciones" role="radiogroup" aria-labelledby="et-medio">
+                <label class="opcion"><input type="radio" name="medio_respuesta" value="CORREO" checked> Correo electrónico</label>
+                <label class="opcion"><input type="radio" name="medio_respuesta" value="FISICO"> Dirección física</label>
+              </div>
+              <span class="error-campo"></span>
+            </div>
+          </fieldset>
+
+          <div class="acciones acciones-entre">
+            <button class="boton boton-secundario" type="button" data-ir="1">Anterior</button>
+            <button class="boton" type="button" id="ir-paso-3">Revisar solicitud</button>
+          </div>
+        </section>
+
+        <!-- PASO 3: revisión -->
+        <section class="panel" id="paso-3" aria-labelledby="t-paso-3" hidden>
+          <div class="panel-titulo"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-list"></use></svg><h2 id="t-paso-3">Revise su solicitud</h2></div>
+          <p class="panel-descripcion">Verifique que todo esté correcto antes de radicar. Después de radicar no podrá modificarla.</p>
+          <dl class="resumen" id="resumen"></dl>
+          <div id="error-envio" style="margin-top:20px"></div>
+          <div class="acciones acciones-entre">
+            <button class="boton boton-secundario" type="button" data-ir="2">Corregir</button>
+            <button class="boton" type="submit" id="radicar" data-cargando="Radicando…">
+              <svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-send"></use></svg>Radicar solicitud
+            </button>
+          </div>
+        </section>
+      </form>
+
+      <!-- Confirmación -->
+      <section class="panel confirmacion" id="confirmacion" hidden tabindex="-1" aria-labelledby="t-confirmacion"></section>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

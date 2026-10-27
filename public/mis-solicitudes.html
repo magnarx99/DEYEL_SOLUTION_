@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis solicitudes | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/mis-solicitudes.js"></script>
+</head>
+<body data-pagina="mis-solicitudes" data-migas='[["Inicio","/"],["Mis solicitudes"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="cabecera-pagina" style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div>
+          <h1 id="saludo">Mis solicitudes</h1>
+          <p>Toque una solicitud para ver su detalle, el historial y la respuesta de la entidad.</p>
+        </div>
+        <a class="boton" href="/pqrds.html"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-plus"></use></svg>Nueva solicitud</a>
+      </div>
+      <div id="aviso" style="margin-bottom:16px"></div>
+      <div class="opciones" id="filtros" role="group" aria-label="Filtrar por estado" style="margin-bottom:16px"></div>
+      <div id="lista"><div class="esqueleto">Cargando sus solicitudes…</div></div>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

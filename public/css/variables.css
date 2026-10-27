@@ -1,0 +1,49 @@
+/* =====================================================================
+   Variables de diseño – Portal PQRDS Gobernación de Antioquia
+   Paleta suave y armónica: azules serenos, acento verde agua y un toque arena.
+   Tipografía: la del sistema operativo (Segoe UI en Windows), sin descargar fuentes.
+   ===================================================================== */
+
+:root {
+  /* Azules (de más oscuro a más claro) */
+  --azul-oscuro: #1E3A5F;      /* títulos y pie de página */
+  --azul-principal: #2B5C8A;   /* botones principales */
+  --azul-medio: #336EA3;       /* enlaces, íconos y foco */
+  --azul-claro: #A8C5E2;       /* bordes de campos */
+  --azul-borde: #DCE6F1;       /* separadores suaves */
+  --azul-muy-claro: #EEF5FC;   /* fondos de sección y datos reconocidos */
+  --blanco: #FFFFFF;
+  --fondo: #F7FAFD;
+  --texto: #2A3645;
+  --texto-suave: #5A6B7E;
+
+  /* Acentos armónicos */
+  --aqua: #4FA3A5;             /* acento secundario (verde agua) */
+  --aqua-claro: #E6F3F2;
+  --arena: #F6EFE4;            /* toque cálido para fondos ilustrados */
+
+  /* Estados (tonos suaves) */
+  --exito: #3C8C6E;   --exito-fondo: #E8F4EF;
+  --alerta: #A87A2A;  --alerta-fondo: #FBF3E3;
+  --error: #B5525F;   --error-fondo: #FAECEE;
+
+  /* Tipografía (escala 1.25) */
+  --fuente: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --t-xs: 0.8125rem;
+  --t-s: 0.9375rem;
+  --t-m: 1rem;
+  --t-l: 1.25rem;
+  --t-xl: 1.625rem;
+  --t-2xl: 2.25rem;
+
+  /* Espaciado */
+  --e-1: 4px; --e-2: 8px; --e-3: 12px; --e-4: 16px; --e-5: 24px; --e-6: 32px; --e-7: 48px; --e-8: 72px;
+
+  /* Forma: esquinas redondeadas y sombras ligeras */
+  --radio: 16px;
+  --radio-s: 10px;
+  --sombra: 0 1px 3px rgba(30, 58, 95, 0.05), 0 10px 30px rgba(30, 58, 95, 0.06);
+  --sombra-fuerte: 0 4px 12px rgba(30, 58, 95, 0.08), 0 24px 56px rgba(30, 58, 95, 0.12);
+  --ancho: 1120px;
+  --ancho-texto: 720px;
+}

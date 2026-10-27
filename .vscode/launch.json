@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Encender el portal (servidor.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/servidor.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Crear base con datos de prueba (borra todo)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/crear_datos.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Crear base VACÍA para datos reales (borra todo)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/crear_datos.py",
+      "args": [
+        "--vacia"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Hacer copia de seguridad",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/respaldar.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Ejecutar pruebas (con el portal encendido)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/pruebas.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}

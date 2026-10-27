@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asistente virtual | Panel PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin-faq.js"></script>
+</head>
+<body data-pagina="panel" data-sin-chat data-migas='[["Panel de gestión","/admin/"],["Asistente virtual"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="panel-cabecera">
+        <div><h1>Respuestas del asistente virtual</h1><p>El asistente responde según las palabras clave. Escríbalas sin tildes y separadas por comas.</p></div>
+        <button class="boton" type="button" id="nueva"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-plus"></use></svg>Agregar respuesta</button>
+      </div>
+      <section class="panel" style="margin-bottom:24px;padding:20px">
+        <h2 class="panel-h" style="margin-bottom:8px">Probar el asistente</h2>
+        <form id="form-prueba" class="cedula-caja"><div class="campo"><label for="prueba" class="sr-only">Pregunta de prueba</label><input id="prueba" placeholder="Ej.: ¿qué diferencia hay entre queja y reclamo?"></div><button class="boton boton-secundario" type="submit">Probar</button></form>
+        <div id="resultado-prueba" style="margin-top:12px"></div>
+      </section>
+      <div class="tabla-envoltura"><table class="tabla">
+        <thead><tr><th>Pregunta</th><th>Palabras clave</th><th>Botón</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="filas"></tbody></table></div>
+      <dialog class="modal" id="modal-faq" aria-labelledby="t-faq" style="width:min(640px,calc(100vw - 24px))">
+        <div class="modal-cabecera"><h2 id="t-faq">Respuesta</h2><button type="button" class="cerrar" data-cerrar aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-x"></use></svg></button></div>
+        <form class="modal-cuerpo formulario" id="form-faq" novalidate>
+          <div class="campo"><label for="q-pregunta">Pregunta<span class="obligatorio">*</span></label><input id="q-pregunta" name="pregunta" maxlength="200" required><span class="error-campo"></span></div>
+          <div class="campo" style="margin-top:12px"><label for="q-palabras">Palabras clave<span class="obligatorio">*</span></label><input id="q-palabras" name="palabras_clave" required><span class="ayuda">Ej.: radicado, consultar, estado de mi solicitud</span><span class="error-campo"></span></div>
+          <div class="campo" style="margin-top:12px"><label for="q-respuesta">Respuesta<span class="obligatorio">*</span></label><textarea id="q-respuesta" name="respuesta" maxlength="1500" required></textarea><span class="error-campo"></span></div>
+          <div class="rejilla" style="margin-top:12px">
+            <div class="campo"><label for="q-accion_texto">Texto del botón (opcional)</label><input id="q-accion_texto" name="accion_texto" maxlength="60"><span class="error-campo"></span></div>
+            <div class="campo"><label for="q-accion_url">Página del botón</label><input id="q-accion_url" name="accion_url" placeholder="/radicar.html?tipo=QUEJA"><span class="error-campo"></span></div>
+          </div>
+          <label class="casilla" style="margin-top:16px"><input type="checkbox" name="activo" checked> <span>Respuesta activa</span></label>
+          <div id="q-mensaje" style="margin-top:12px"></div>
+          <div class="acciones"><button class="boton" type="submit" data-cargando="Guardando…">Guardar</button><button class="boton boton-secundario" type="button" data-cerrar>Cancelar</button></div>
+        </form>
+      </dialog>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

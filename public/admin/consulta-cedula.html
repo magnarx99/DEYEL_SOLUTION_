@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consulta por cédula | Panel PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin-cedula.js"></script>
+</head>
+<body data-pagina="panel" data-sin-chat data-migas='[["Panel de gestión","/admin/"],["Consulta por cédula"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="panel-cabecera">
+        <div><h1>Consulta por cédula</h1><p>Vea la ficha del ciudadano y todas sus solicitudes. Cada consulta queda registrada en la auditoría.</p></div>
+      </div>
+      <form class="panel formulario" id="form-cedula" novalidate>
+        <div class="cedula-caja">
+          <div class="campo"><label for="cedula">Número de cédula</label>
+            <input class="campo-cedula" id="cedula" name="cedula" inputmode="numeric" maxlength="10" autocomplete="off" required>
+            <span class="error-campo">El documento debe tener de 6 a 10 dígitos.</span></div>
+          <button class="boton" type="submit" id="consultar" data-cargando="Consultando…"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-search"></use></svg>Consultar</button>
+        </div>
+      </form>
+      <div id="mensaje" style="margin-top:16px"></div>
+      <div id="resultado"></div>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

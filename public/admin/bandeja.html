@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bandeja de PQRDS | Panel PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin-bandeja.js"></script>
+</head>
+<body data-pagina="panel" data-sin-chat data-migas='[["Panel de gestión","/admin/"],["Bandeja de PQRDS"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="panel-cabecera">
+        <div><h1>Bandeja de PQRDS</h1><p id="alcance">Filtre, abra y gestione las solicitudes.</p></div>
+        <a class="boton oculto" id="exportar" href="#"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-file-spreadsheet"></use></svg>Descargar en Excel</a>
+      </div>
+      <form class="panel formulario" id="filtros" style="padding:20px" novalidate>
+        <div class="barra-filtros">
+          <div class="campo"><label for="q">Buscar</label><input id="q" name="q" placeholder="Radicado, asunto o apellido"></div>
+          <div class="campo"><label for="cedula">Cédula</label><input id="cedula" name="cedula" inputmode="numeric" maxlength="10"></div>
+          <div class="campo"><label for="desde">Desde</label><input id="desde" name="desde" type="date"></div>
+          <div class="campo"><label for="hasta">Hasta</label><input id="hasta" name="hasta" type="date"></div>
+          <div class="campo"><label for="tipo">Tipo</label><select id="tipo" name="tipo"></select></div>
+          <div class="campo"><label for="estado">Estado</label><select id="estado" name="estado">
+            <option value="">Todos</option><option value="RADICADA">Radicada</option><option value="EN_TRAMITE">En trámite</option>
+            <option value="TRASLADADA">Trasladada</option><option value="RESPONDIDA">Respondida</option><option value="CERRADA">Cerrada</option></select></div>
+          <div class="campo"><label for="dependencia">Dependencia</label><select id="dependencia" name="dependencia"></select></div>
+          <div class="campo"><label for="municipio">Municipio del hecho</label><select id="municipio" name="municipio"></select></div>
+          <div class="campo"><label for="semaforo">Vencimiento</label><select id="semaforo" name="semaforo">
+            <option value="">Todos</option><option value="VENCIDA">Vencidas</option><option value="POR_VENCER">Por vencer (4 días)</option></select></div>
+          <div class="acciones">
+            <button type="button" class="boton boton-secundario" id="limpiar">Limpiar filtros</button>
+            <button type="submit" class="boton"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-filter"></use></svg>Aplicar filtros</button>
+          </div>
+        </div>
+      </form>
+      <div class="resumen-filtros"><span id="total" aria-live="polite"></span>
+        <label class="texto-chico">Por página <select id="por-pagina" style="min-height:32px;margin-left:6px"><option>15</option><option>30</option><option>50</option></select></label></div>
+      <div class="tabla-envoltura"><table class="tabla">
+        <thead><tr>
+          <th><button type="button" data-orden="radicado">Radicado</button></th>
+          <th><button type="button" data-orden="fecha">Fecha</button></th>
+          <th><button type="button" data-orden="tipo">Tipo</button></th>
+          <th><button type="button" data-orden="ciudadano">Ciudadano</button></th>
+          <th>Asunto</th>
+          <th><button type="button" data-orden="dependencia">Dependencia</button></th>
+          <th><button type="button" data-orden="estado">Estado</button></th>
+          <th><button type="button" data-orden="limite">Límite</button></th>
+        </tr></thead>
+        <tbody id="filas"><tr><td colspan="8" class="vacia">Cargando…</td></tr></tbody>
+      </table></div>
+      <div class="paginacion"><span id="pagina-texto"></span><div>
+        <button type="button" class="boton boton-secundario boton-chico" id="anterior">Anterior</button>
+        <button type="button" class="boton boton-secundario boton-chico" id="siguiente">Siguiente</button></div></div>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>

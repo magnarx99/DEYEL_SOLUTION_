@@ -1,0 +1,86 @@
+/* ===== Panel de gestión (funcionarios y administradores) ===== */
+.subnav { background: var(--blanco); border-bottom: 1px solid var(--azul-borde); }
+.subnav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--e-1); overflow-x: auto; }
+.subnav a {
+  display: flex; align-items: center; gap: 6px; padding: 14px 14px 12px; text-decoration: none; color: var(--texto-suave);
+  font-weight: 600; font-size: var(--t-s); border-bottom: 3px solid transparent; white-space: nowrap;
+}
+.subnav a:hover { color: var(--azul-oscuro); }
+.subnav a[aria-current="page"] { color: var(--azul-oscuro); border-bottom-color: var(--azul-medio); }
+.subnav .icono { width: 18px; height: 18px; }
+
+.panel-cabecera { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--e-4); flex-wrap: wrap; padding: var(--e-6) 0 var(--e-5); }
+.panel-cabecera h1 { margin: 0 0 4px; font-size: 1.875rem; }
+.panel-cabecera p { margin: 0; color: var(--texto-suave); }
+
+/* Indicadores */
+.indicadores { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--e-3); margin-bottom: var(--e-5); }
+.indicador {
+  background: var(--blanco); border: 1px solid var(--azul-borde); border-radius: var(--radio); padding: var(--e-4);
+  text-decoration: none; color: var(--texto); display: block;
+}
+a.indicador:hover { border-color: var(--azul-medio); color: var(--texto); }
+.indicador span { display: block; font-size: var(--t-s); color: var(--texto-suave); }
+.indicador strong { display: block; font-size: 2rem; line-height: 1.1; color: var(--azul-oscuro); font-variant-numeric: tabular-nums; margin-top: 4px; }
+.indicador-alerta strong { color: var(--alerta); }
+.indicador-error strong { color: var(--error); }
+.indicador-exito strong { color: var(--exito); }
+
+.rejilla-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e-5); margin-bottom: var(--e-5); }
+.grafico { position: relative; height: 280px; }
+.panel h2.panel-h { font-size: var(--t-l); margin-bottom: var(--e-4); }
+
+/* Filtros de la bandeja */
+.barra-filtros { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--e-3) var(--e-4); align-items: end; }
+.barra-filtros .campo input, .barra-filtros .campo select { min-height: 40px; padding: 8px 10px; }
+.barra-filtros .acciones { margin: 0; grid-column: 1 / -1; justify-content: space-between; }
+.resumen-filtros { font-size: var(--t-s); color: var(--texto-suave); margin: var(--e-4) 0 var(--e-2); display: flex; justify-content: space-between; gap: var(--e-3); flex-wrap: wrap; align-items: center; }
+
+/* Detalle de PQRDS en el modal */
+.detalle-rejilla { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--e-6); }
+.detalle-rejilla h3 { font-size: var(--t-m); margin-top: var(--e-5); }
+.detalle-rejilla h3:first-child { margin-top: 0; }
+.descripcion-caso { white-space: pre-line; background: var(--fondo); border-radius: var(--radio-s); padding: var(--e-4); font-size: var(--t-s); }
+.gestion { background: var(--azul-muy-claro); border-radius: var(--radio); padding: var(--e-5); }
+.gestion .campo + .campo { margin-top: var(--e-3); }
+.gestion textarea { min-height: 110px; }
+.adjuntos-lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; font-size: var(--t-s); }
+.adjuntos-lista a { display: inline-flex; gap: 6px; align-items: center; }
+
+/* Usuarios y FAQ */
+.fila-acciones { display: flex; gap: var(--e-1); flex-wrap: wrap; }
+.etiqueta-rol { font-size: var(--t-xs); font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--azul-muy-claro); color: var(--azul-principal); }
+.etiqueta-rol.ADMIN { background: var(--azul-principal); color: var(--blanco); }
+.inactivo td { color: var(--texto-suave); }
+
+@media (max-width: 1000px) {
+  .indicadores { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .barra-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rejilla-panel, .detalle-rejilla { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .indicadores, .barra-filtros { grid-template-columns: 1fr 1fr; }
+  .indicador strong { font-size: 1.5rem; }
+}
+
+/* Ajustes de alineación */
+.rejilla-panel .panel + .panel { margin-top: 0; }
+.detalle-rejilla .resumen { grid-template-columns: 150px minmax(0, 1fr); }
+.detalle-rejilla > div:last-child .resumen { grid-template-columns: 96px minmax(0, 1fr); }
+@media (max-width: 600px) { .detalle-rejilla .resumen, .detalle-rejilla > div:last-child .resumen { grid-template-columns: 1fr; } }
+
+/* ---------- Gráficos hechos con HTML y CSS (sin librerías) ---------- */
+.grafico { height: auto; }
+.barras-v { display: flex; align-items: flex-end; gap: 10px; height: 240px; padding-top: 8px; }
+.bv-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; gap: 4px; }
+.bv-col b { font-size: var(--t-xs); color: var(--azul-oscuro); }
+.bv-barra { width: 100%; max-width: 46px; border-radius: 8px 8px 0 0; min-height: 2px; }
+.bv-et { font-size: 10px; color: var(--texto-suave); text-align: center; line-height: 1.2; height: 2.4em; overflow: hidden; width: 100%; padding: 0 2px; overflow-wrap: anywhere; hyphens: auto; }
+.barras-v { column-gap: 6px; }
+.barras-h { display: grid; gap: 10px; }
+.bh-fila { display: grid; grid-template-columns: 160px 1fr 28px; gap: 10px; align-items: center; font-size: var(--t-xs); }
+.bh-et { color: var(--texto-suave); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bh-barra { background: var(--azul-muy-claro); border-radius: 999px; height: 16px; overflow: hidden; }
+.bh-barra i { display: block; height: 100%; border-radius: 999px; }
+.bh-fila b { color: var(--azul-oscuro); }
+@media (max-width: 600px) { .bh-fila { grid-template-columns: 96px 1fr 24px; } .bv-et { font-size: 9px; } }

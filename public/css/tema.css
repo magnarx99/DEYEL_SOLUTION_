@@ -1,0 +1,172 @@
+/* =====================================================================
+   Tema suave: encabezado claro, portada ilustrada, tarjetas redondeadas,
+   sombras ligeras y asistente virtual con avatar.
+   Se carga después de base.css y componentes.css para ajustar su apariencia.
+   ===================================================================== */
+body { background: var(--fondo); color: var(--texto); }
+::selection { background: #D6E7F7; }
+
+/* ---------- Encabezado claro ---------- */
+.franja-gov { background: var(--azul-muy-claro); color: var(--texto-suave); border-bottom: 1px solid var(--azul-borde); }
+.encabezado { background: rgba(255, 255, 255, 0.96); color: var(--azul-oscuro); border-bottom: 1px solid var(--azul-borde); box-shadow: 0 2px 12px rgba(30, 58, 95, 0.04); }
+.marca, .marca:hover { color: var(--azul-oscuro); }
+.marca-texto span { color: var(--texto-suave); }
+.menu a, .menu button.enlace-menu { color: var(--texto); border-radius: 999px; padding: 8px 14px; }
+.menu a .icono, .menu button.enlace-menu .icono { color: var(--azul-medio); }
+.menu a:hover, .menu button.enlace-menu:hover { background: var(--azul-muy-claro); color: var(--azul-oscuro); }
+.menu a[aria-current="page"] { background: var(--azul-muy-claro); color: var(--azul-principal); box-shadow: none; border-radius: 999px; }
+.menu .boton-sesion { background: var(--azul-principal); color: var(--blanco); margin-left: var(--e-2); }
+.menu .boton-sesion .icono { color: var(--blanco); }
+.menu .boton-sesion:hover { background: var(--azul-oscuro); color: var(--blanco); }
+.boton-menu { border-color: var(--azul-borde); color: var(--azul-principal); background: var(--blanco); }
+.migas { background: transparent; border-bottom: 0; }
+.subnav { background: var(--blanco); border-bottom: 1px solid var(--azul-borde); }
+.subnav a[aria-current="page"] { border-bottom-color: var(--aqua); }
+@media (max-width: 1180px) {
+  .menu { background: var(--blanco); border-top: 1px solid var(--azul-borde); box-shadow: var(--sombra); }
+}
+
+/* ---------- Pie de página ---------- */
+.pie { background: linear-gradient(180deg, #24466F 0%, var(--azul-oscuro) 100%); color: #D3E1F0; }
+.pie a { color: #E6EFF8; }
+.pie-legal { color: #AFC4DB; border-top-color: rgba(255, 255, 255, 0.1); }
+
+/* ---------- Botones y campos más suaves ---------- */
+.boton { border-radius: var(--radio-s); box-shadow: 0 1px 2px rgba(30, 58, 95, 0.08); transition: background-color .2s, box-shadow .2s, transform .2s; }
+.boton:hover { box-shadow: 0 6px 16px rgba(43, 92, 138, 0.18); }
+.boton-secundario, .boton-texto, .boton-peligro { box-shadow: none; }
+.boton-secundario { border-color: var(--azul-borde); }
+.campo input, .campo select, .campo textarea { border-color: #C9DAEC; border-radius: var(--radio-s); background: #FCFDFF; }
+.campo input[readonly] { background: var(--azul-muy-claro); }
+.opcion { border-color: #C9DAEC; border-radius: 999px; padding: 9px 16px; }
+.panel { border-color: var(--azul-borde); border-radius: var(--radio); box-shadow: var(--sombra); }
+.aviso { border-radius: var(--radio-s); }
+.ficha { border-radius: var(--radio); border-left-color: var(--aqua); background: linear-gradient(135deg, #F1F7FD 0%, #EEF7F6 100%); }
+.ficha-cabecera h3 .icono { color: var(--aqua); }
+.tabla-envoltura { border-radius: var(--radio); box-shadow: var(--sombra); border-color: var(--azul-borde); }
+.tabla th { background: #F2F7FC; }
+.indicador { border-radius: var(--radio); box-shadow: var(--sombra); border-color: var(--azul-borde); }
+.pasos-barra { background: #E3ECF6; border-radius: 999px; }
+.pasos-barra span { background: linear-gradient(90deg, var(--azul-medio), var(--aqua)); border-radius: 999px; }
+.numero-radicado { border-radius: var(--radio); border-color: var(--aqua); background: var(--aqua-claro); }
+.zona-archivos { border-radius: var(--radio); background: #FAFCFE; }
+dialog.modal { border-radius: 20px; }
+.estado { border-radius: 999px; }
+.estado-RADICADA { background: var(--azul-muy-claro); color: var(--azul-medio); border-color: var(--azul-borde); }
+.estado-EN_TRAMITE { background: #EDF0FA; color: #4A5DA8; border-color: #D9DFF3; }
+.estado-TRASLADADA { background: var(--alerta-fondo); color: var(--alerta); border-color: #EFDDB8; }
+.estado-RESPONDIDA { background: var(--exito-fondo); color: var(--exito); border-color: #C8E3D7; }
+.semaforo-VENCIDA { color: var(--error); } .semaforo-POR_VENCER { color: var(--alerta); } .semaforo-A_TIEMPO { color: var(--exito); }
+.toast { background: var(--azul-oscuro); border-radius: 999px; padding: 12px 22px; box-shadow: var(--sombra-fuerte); }
+
+/* ---------- Portada ilustrada ---------- */
+.portada {
+  background:
+    radial-gradient(900px 420px at 85% 10%, rgba(79, 163, 165, 0.12), transparent 60%),
+    radial-gradient(700px 380px at 0% 100%, rgba(51, 110, 163, 0.10), transparent 60%),
+    linear-gradient(180deg, #EAF3FB 0%, var(--fondo) 100%);
+  color: var(--texto); padding: var(--e-7) 0 var(--e-7);
+}
+.portada::after { display: none; }
+.portada .contenedor { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--e-6); }
+.portada h1 { color: var(--azul-oscuro); font-size: 2.6rem; max-width: 16ch; }
+.portada p { color: var(--texto-suave); }
+.portada .panel { margin-top: var(--e-5); padding: var(--e-5); border: 1px solid rgba(220, 230, 241, 0.9); }
+.portada .panel h2 { font-size: var(--t-l); margin-bottom: 4px; }
+.portada-imagen img { width: 100%; height: auto; display: block; }
+.paso-ilustrado img { width: 120px; height: 96px; margin-bottom: var(--e-3); }
+.principio > div { background: var(--blanco); border: 1px solid var(--azul-borde); border-radius: var(--radio); padding: var(--e-5); box-shadow: var(--sombra); }
+.principio h3 { font-size: 1.0625rem; }
+.acceso { border-radius: var(--radio); box-shadow: var(--sombra); border-color: var(--azul-borde); transition: border-color .2s, box-shadow .2s; }
+.acceso:hover { box-shadow: var(--sombra-fuerte); border-color: var(--azul-claro); }
+.acceso .icono { width: 40px; height: 40px; padding: 9px; border-radius: 12px; background: var(--azul-muy-claro); margin-top: 0; }
+.acceso:nth-child(2) .icono { background: var(--aqua-claro); color: var(--aqua); }
+.acceso:nth-child(3) .icono { background: var(--arena); color: #A87A2A; }
+
+/* ---------- Encabezados de página con ilustración ---------- */
+.cabecera-ilustrada { display: flex; align-items: center; justify-content: space-between; gap: var(--e-5); }
+.cabecera-ilustrada img { width: 150px; height: auto; flex: none; }
+@media (max-width: 700px) { .cabecera-ilustrada img { display: none; } }
+
+/* ---------- Tipos de solicitud ---------- */
+.lista-tipos { border-radius: var(--radio); border-color: var(--azul-borde); overflow: hidden; }
+.tipo { transition: background-color .2s; }
+.tipo:hover { background: #FAFCFE; }
+.tipo-icono { background: linear-gradient(135deg, #E6F0FA, #E6F3F2); color: var(--azul-principal); border-radius: 16px; }
+.tipo:nth-child(3n+2) .tipo-icono { background: linear-gradient(135deg, #E6F3F2, #EEF5FC); color: #3C8F91; }
+.tipo:nth-child(3n) .tipo-icono { background: linear-gradient(135deg, #F6EFE4, #EEF5FC); color: #8F6A2A; }
+.tipo-plazo { color: var(--aqua); }
+.ejemplo-tipo { border-radius: var(--radio-s); background: var(--aqua-claro); }
+.filtro-tipos input { border-radius: 999px; }
+.seguimiento-caja {
+  border-radius: 20px; background: linear-gradient(120deg, var(--azul-principal) 0%, #3A7AAE 60%, #4A9AA0 100%);
+  box-shadow: var(--sombra-fuerte); position: relative; overflow: hidden;
+}
+.seguimiento-caja::after { content: ''; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); }
+.seguimiento-caja > * { position: relative; z-index: 1; }
+
+/* ---------- Inicio de sesión en dos columnas ---------- */
+.auth-dos { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: var(--e-6); align-items: center; max-width: 980px; margin: var(--e-7) auto; }
+.auth-dos .caja-auth { margin: 0; max-width: none; }
+.auth-imagen h2 { margin-top: var(--e-5); }
+.auth-imagen p { color: var(--texto-suave); }
+.auth-imagen img { width: 100%; height: auto; }
+@media (max-width: 860px) { .auth-dos { grid-template-columns: 1fr; } .auth-imagen { display: none; } }
+
+/* ---------- Asistente virtual ---------- */
+.chatbot { right: 22px; bottom: 22px; }
+.chatbot-boton {
+  padding: 6px 18px 6px 6px; gap: 10px; background: var(--blanco); color: var(--azul-oscuro);
+  border: 1px solid var(--azul-borde); box-shadow: var(--sombra-fuerte);
+}
+.chatbot-boton:hover { background: var(--azul-muy-claro); }
+.chatbot-boton img { width: 44px; height: 44px; border-radius: 50%; }
+.chatbot-boton .en-linea { position: relative; display: inline-flex; }
+.chatbot-boton .en-linea::after { content: ''; position: absolute; right: 1px; bottom: 1px; width: 11px; height: 11px; border-radius: 50%; background: #4CB782; border: 2px solid var(--blanco); }
+.chatbot-saludo {
+  position: absolute; right: 0; bottom: 70px; width: 270px; background: var(--blanco); border: 1px solid var(--azul-borde);
+  border-radius: 18px 18px 6px 18px; padding: 14px 36px 14px 16px; box-shadow: var(--sombra-fuerte); font-size: var(--t-s); color: var(--texto);
+  cursor: pointer; animation: aparecer .35s ease-out;
+}
+.chatbot-saludo strong { color: var(--azul-oscuro); display: block; margin-bottom: 2px; }
+.chatbot-saludo .cerrar-saludo { position: absolute; top: 6px; right: 6px; background: none; border: 0; color: var(--texto-suave); cursor: pointer; padding: 4px; border-radius: 50%; }
+.chatbot-saludo .cerrar-saludo:hover { background: var(--azul-muy-claro); }
+@keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.chatbot-ventana { border-radius: 22px; bottom: 74px; width: min(390px, calc(100vw - 32px)); height: min(600px, calc(100vh - 120px)); border: 0; box-shadow: var(--sombra-fuerte); animation: aparecer .25s ease-out; }
+.chatbot-cabecera { background: linear-gradient(120deg, var(--azul-principal), #3A7AAE 70%, #4A9AA0); padding: 14px 16px; }
+.chatbot-cabecera img { width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.6); background: var(--blanco); }
+.chatbot-cabecera strong { font-size: 1.0625rem; }
+.chatbot-cabecera span { color: #DCEAF7; display: flex; align-items: center; gap: 6px; }
+.chatbot-cabecera span::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #7FE0AE; }
+.chatbot-mensajes { background: linear-gradient(180deg, #F3F8FD 0%, #FAFCFE 100%); gap: 10px; }
+.fila-bot { display: flex; gap: 8px; align-items: flex-end; max-width: 92%; }
+.fila-bot img { width: 28px; height: 28px; border-radius: 50%; flex: none; }
+.fila-bot .msj { max-width: none; }
+.msj { border-radius: 16px; box-shadow: 0 1px 2px rgba(30, 58, 95, 0.05); }
+.msj-bot { border-color: var(--azul-borde); border-bottom-left-radius: 6px; }
+.msj-usuario { background: linear-gradient(120deg, var(--azul-principal), #3A7AAE); border-bottom-right-radius: 6px; }
+.msj-hora { font-size: 11px; color: #8A99AB; margin-top: 2px; }
+.menu-chat { display: grid; gap: 6px; margin-top: 4px; }
+.menu-chat button {
+  display: flex; align-items: center; gap: 10px; text-align: left; background: var(--blanco); border: 1px solid var(--azul-borde);
+  border-radius: 12px; padding: 9px 12px; font-weight: 600; font-size: var(--t-s); color: var(--azul-principal); cursor: pointer;
+}
+.menu-chat button:hover { background: var(--azul-muy-claro); border-color: var(--azul-claro); }
+.menu-chat .icono { width: 18px; height: 18px; color: var(--aqua); }
+.sugerencias button { border-color: var(--azul-borde); }
+.chatbot-form { border-top-color: var(--azul-borde); background: var(--blanco); }
+.chatbot-form input { background: var(--fondo); border-color: var(--azul-borde); }
+.chatbot-form button { background: linear-gradient(120deg, var(--azul-principal), #3A7AAE); }
+
+@media (max-width: 900px) {
+  .portada .contenedor { grid-template-columns: 1fr; }
+  .portada-imagen { order: -1; max-width: 520px; }
+  .portada h1 { font-size: 2.1rem; }
+}
+@media (max-width: 680px) {
+  .chatbot-boton > span:last-child { display: none; }
+  .chatbot-boton { padding: 5px; }
+  .chatbot-saludo { width: min(260px, calc(100vw - 48px)); }
+}
+@media (prefers-reduced-motion: reduce) { .chatbot-saludo, .chatbot-ventana { animation: none; } }
+@media (max-width: 680px) { .chatbot-boton .en-linea { display: inline-flex !important; } }

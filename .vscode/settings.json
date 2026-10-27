@@ -1,0 +1,7 @@
+{
+  "files.exclude": { "**/__pycache__": true },
+  "editor.tabSize": 4,
+  "[javascript]": { "editor.tabSize": 2 },
+  "[html]": { "editor.tabSize": 2 },
+  "[css]": { "editor.tabSize": 2 }
+}

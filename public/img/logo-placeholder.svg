@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Espacio para el logo de la Gobernación de Antioquia">
+  <!-- MARCADOR DE POSICIÓN: reemplace este archivo por el logo oficial autorizado de la entidad. -->
+  <rect x="1" y="1" width="46" height="46" rx="12" fill="#EDF4FB" stroke="#A8C5E2" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M8 34 L17 21 L23 28 L30 16 L40 34 Z" fill="#A9D1C6"/>
+  <path d="M8 34 L17 21 L23 28 L30 16 L40 34" fill="none" stroke="#2B5C8A" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="35" cy="13" r="3" fill="#F2C76E"/>
+</svg>

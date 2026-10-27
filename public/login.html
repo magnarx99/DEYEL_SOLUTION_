@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión | PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <script type="module" src="/js/login.js"></script>
+</head>
+<body data-pagina="login" data-migas='[["Inicio","/"],["Iniciar sesión"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+     <div class="auth-dos">
+      <div class="auth-imagen">
+        <img src="/img/ilustracion-acceso.svg" alt="" width="360" height="300">
+        <h2>Todas sus solicitudes en un solo lugar</h2>
+        <p>Con su cuenta verá el estado, el historial y la respuesta de cada solicitud, y radicará nuevas sin volver a escribir sus datos.</p>
+      </div>
+      <div class="caja-auth">
+        <form class="panel formulario" id="form-login" novalidate>
+          <h1 style="font-size:1.75rem">Iniciar sesión</h1>
+          <p class="texto-suave">Ciudadanos, funcionarios y administradores ingresan aquí.</p>
+          <div class="campo">
+            <label for="usuario">Correo o número de cédula</label>
+            <input id="usuario" name="usuario" autocomplete="username" required>
+            <span class="error-campo">Escriba su correo o cédula.</span>
+          </div>
+          <div class="campo" style="margin-top:16px">
+            <label for="password">Contraseña</label>
+            <div class="con-boton">
+              <input id="password" name="password" type="password" autocomplete="current-password" required>
+              <button type="button" data-ver-password aria-label="Mostrar contraseña"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-eye"></use></svg></button>
+            </div>
+            <span class="error-campo">Escriba su contraseña.</span>
+          </div>
+          <p style="margin:12px 0 0"><a href="/recuperar.html" class="texto-chico">¿Olvidó su contraseña?</a></p>
+          <div id="mensaje" style="margin-top:16px"></div>
+          <button class="boton boton-ancho" type="submit" id="entrar" data-cargando="Ingresando…" style="margin-top:20px">Ingresar</button>
+          <div class="separador">¿Aún no tiene cuenta?</div>
+          <a class="boton boton-secundario boton-ancho" href="/registro.html">Crear cuenta</a>
+          <p class="texto-chico texto-suave" style="margin:20px 0 0">No necesita cuenta para radicar: puede <a href="/pqrds.html">presentar una solicitud</a> solo con su cédula.</p>
+        </form>
+      </div>
+     </div>
+    </div>
+  </main>
+</body>
+</html>

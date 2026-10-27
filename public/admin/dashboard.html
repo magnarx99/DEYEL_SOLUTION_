@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tablero | Panel PQRDS Gobernación de Antioquia</title>
+  <link rel="icon" href="/img/logo-placeholder.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/tema.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script type="module" src="/js/admin-dashboard.js"></script>
+</head>
+<body data-pagina="panel" data-sin-chat data-migas='[["Panel de gestión","/admin/"],["Tablero"]]'>
+  <main id="contenido">
+    <div class="contenedor">
+      <div class="panel-cabecera">
+        <div><h1>Tablero de PQRDS</h1><p id="fecha-hoy">Resumen de la gestión</p></div>
+        <a class="boton" href="/admin/bandeja.html"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-inbox"></use></svg>Ir a la bandeja</a>
+      </div>
+      <div class="indicadores" id="indicadores" aria-live="polite"></div>
+      <div class="rejilla-panel">
+        <section class="panel"><h2 class="panel-h">Solicitudes por tipo</h2><div class="grafico" id="g-tipo" aria-live="polite"></div></section>
+        <section class="panel"><h2 class="panel-h">Solicitudes por dependencia</h2><div class="grafico" id="g-dependencia" aria-live="polite"></div></section>
+      </div>
+      <section class="panel" style="margin-bottom:24px"><h2 class="panel-h">Radicaciones de los últimos 6 meses</h2><div class="grafico" id="g-mes" aria-live="polite"></div></section>
+      <section>
+        <h2 class="panel-h" style="font-size:1.25rem">Últimas solicitudes</h2>
+        <div class="tabla-envoltura"><table class="tabla">
+          <thead><tr><th>Radicado</th><th>Fecha</th><th>Tipo</th><th>Ciudadano</th><th>Asunto</th><th>Dependencia</th><th>Estado</th><th>Límite</th></tr></thead>
+          <tbody id="ultimas"></tbody></table></div>
+      </section>
+    </div>
+    <div style="height:72px"></div>
+  </main>
+</body>
+</html>
