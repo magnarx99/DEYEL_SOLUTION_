@@ -8,6 +8,25 @@ const CORREO_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,72}$/;
 const hoy = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Bogota' }).format(new Date());
 
+// Reglas de la cita: las envía el servidor (fecha mínima según el plazo de respuesta y festivos de Colombia)
+const cita = { minima: '', dias: 5, festivos: new Set() };
+export function configurarCita({ fecha_minima: minima, dias_habiles: dias, festivos }) {
+  Object.assign(cita, { minima, dias, festivos: new Set(festivos) });
+}
+const esDiaHabil = (v) => {
+  const dia = new Date(`${v}T12:00:00Z`).getUTCDay(); // 0 = domingo, 6 = sábado
+  return dia !== 0 && dia !== 6 && !cita.festivos.has(v);
+};
+const reglaCita = (v) => {
+  if (!v) return 'Elija una fecha.';
+  if (v < cita.minima) {
+    const legible = new Intl.DateTimeFormat('es-CO', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+      .format(new Date(`${cita.minima}T12:00:00Z`));
+    return `La entidad tiene hasta ${cita.dias} días hábiles para responder. Elija una fecha desde el ${legible}.`;
+  }
+  return esDiaHabil(v) ? '' : 'Elija un día hábil (de lunes a viernes, sin festivos).';
+};
+
 /** Reglas por nombre de campo: devuelven el mensaje de error o '' si es válido. */
 const REGLAS = {
   tipo_documento: (v) => (v ? '' : 'Seleccione el tipo de documento.'),
@@ -24,6 +43,10 @@ const REGLAS = {
     return CORREO_REGEX.test(v) ? '' : 'Escriba un correo válido, por ejemplo nombre@correo.com.';
   },
   password: (v) => (PASSWORD_REGEX.test(v) ? '' : 'Mínimo 8 caracteres, con una mayúscula, un número y un símbolo.'),
+  password_actual: (v) => (v ? '' : 'Escriba su contraseña actual.'),
+  confirmar_cedula: (v, el) => (v && v === el.form?.elements.cedula?.value ? '' : 'Los dos números no coinciden.'),
+  motivo: (v) => (v.trim().length >= 10 ? '' : 'Explique brevemente el motivo (mínimo 10 caracteres).'),
+  confirmacion: (v) => (v.trim().toUpperCase() === 'ELIMINAR' ? '' : 'Escriba ELIMINAR para confirmar.'),
   confirmar_password: (v, el) => (v && v === el.form?.elements.password?.value ? '' : 'Las contraseñas no coinciden.'),
   acepta_tratamiento_datos: (_v, el) => (el.checked ? '' : 'Debe autorizar el tratamiento de sus datos para continuar.'),
   tipo: (v) => (v ? '' : 'Seleccione el tipo de solicitud.'),
@@ -31,7 +54,7 @@ const REGLAS = {
   asunto: (v) => (v.trim().length >= 5 ? '' : 'Escriba un asunto de al menos 5 caracteres.'),
   descripcion: (v) => (v.trim().length >= 20 ? '' : 'Describa su caso con al menos 20 caracteres.'),
   medio_respuesta: (_v, el) => (el.form && [...el.form.elements.medio_respuesta].some((r) => r.checked) ? '' : 'Elija cómo quiere recibir la respuesta.'),
-  fecha_cita_preferida: (v) => (!v ? 'Elija una fecha.' : v <= hoy() ? 'Elija una fecha a partir de mañana.' : ''),
+  fecha_cita_preferida: reglaCita,
   modalidad_cita: (_v, el) => (el.form && [...el.form.elements.modalidad_cita].some((r) => r.checked) ? '' : 'Elija la modalidad.'),
 };
 

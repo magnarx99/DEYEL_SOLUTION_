@@ -143,7 +143,7 @@ INSERT INTO faq_chatbot (palabras_clave, pregunta, respuesta, accion_texto, acci
  'Presentar denuncia', '/radicar.html?tipo=DENUNCIA'),
 ('cita,agendar,reunion,asesoria presencial,turno',
  '¿Cómo agendo una cita?',
- 'Elija "Agenda tu cita", identifíquese con su cédula, indique el trámite, la fecha preferida y si la prefiere presencial o virtual. La dependencia le confirmará la cita.',
+ 'Elija "Agenda tu cita", identifíquese con su cédula, indique el trámite, la fecha preferida y si la prefiere presencial o virtual. Como la entidad tiene hasta 5 días hábiles para responder, la cita solo puede ser en un día hábil después de ese plazo. La dependencia le confirmará la fecha y la hora.',
  'Agendar cita', '/radicar.html?tipo=CITA'),
 ('no reconoce,no aparece,cedula,mis datos no salen,ya me registre',
  'El sistema no reconoce mi cédula',

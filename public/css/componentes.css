@@ -15,6 +15,8 @@
 .boton-texto:hover { background: var(--azul-muy-claro); color: var(--azul-principal); }
 .boton-peligro { background: var(--blanco); color: var(--error); border-color: #E3B5BB; }
 .boton-peligro:hover { background: var(--error-fondo); color: var(--error); }
+.boton-peligro-lleno { background: var(--error); color: var(--blanco); }
+.boton-peligro-lleno:hover { background: #963F4B; color: var(--blanco); }
 .boton-chico { min-height: 34px; padding: 6px 12px; font-size: var(--t-s); }
 .boton-ancho { width: 100%; }
 .acciones { display: flex; flex-wrap: wrap; gap: var(--e-3); align-items: center; margin-top: var(--e-5); }
@@ -348,6 +350,13 @@ dialog.modal::backdrop { background: rgba(11, 37, 69, .45); }
 .escribiendo i:nth-child(2) { animation-delay: .15s; }
 .escribiendo i:nth-child(3) { animation-delay: .3s; }
 @keyframes rebote { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-4px); } }
+
+/* --- Mi cuenta: eliminar cuenta --- */
+.panel.zona-peligro { border-color: #EBCDD1; }
+.zona-peligro .panel-titulo .icono { color: var(--error); }
+.zona-peligro h2 { font-size: var(--t-l); margin: 0; }
+.lista-consecuencias { margin: 0 0 var(--e-5); padding-left: var(--e-5); color: var(--texto); }
+.lista-consecuencias li + li { margin-top: var(--e-2); }
 
 /* --- Adaptación a pantallas pequeñas --- */
 @media (max-width: 900px) {

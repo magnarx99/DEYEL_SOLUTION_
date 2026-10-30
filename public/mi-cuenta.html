@@ -14,12 +14,19 @@
 <body data-pagina="cuenta" data-migas='[["Inicio","/"],["Mi cuenta"]]'>
   <main id="contenido">
     <div class="contenedor contenedor-angosto">
-      <div class="cabecera-pagina">
-        <h1>Mi cuenta</h1>
-        <p>Mantenga sus datos al día. Se usarán automáticamente en todas sus próximas solicitudes.</p>
+      <div class="cabecera-pagina cabecera-ilustrada">
+        <div>
+          <h1>Mi cuenta</h1>
+          <p>Mantenga sus datos al día. Se usarán automáticamente en todas sus próximas solicitudes.</p>
+        </div>
+        <img src="/img/ilustracion-cuenta.svg" alt="" width="150" height="120">
       </div>
       <form class="panel formulario" id="form-cuenta" novalidate>
         <div class="ficha" style="margin:0 0 24px">
+          <div class="ficha-cabecera">
+            <h3><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-id-card"></use></svg>Datos del documento</h3>
+            <button type="button" class="boton boton-secundario boton-chico" id="abrir-documento"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-pencil"></use></svg>Corregir</button>
+          </div>
           <dl class="ficha-datos">
             <div><dt>Documento</dt><dd id="dato-documento"></dd></div>
             <div><dt>Fecha de expedición</dt><dd id="dato-expedicion"></dd></div>
@@ -41,6 +48,101 @@
           <button class="boton" type="submit" id="guardar" data-cargando="Guardando…">Guardar cambios</button>
         </div>
       </form>
+
+      <section class="panel zona-peligro" aria-labelledby="t-eliminar">
+        <div class="panel-titulo"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-trash-2"></use></svg><h2 id="t-eliminar">Eliminar mi cuenta</h2></div>
+        <p class="panel-descripcion">Puede desvincularse del portal cuando quiera. Se borrarán su usuario y su contraseña.
+          Las solicitudes que ya radicó se conservan porque la entidad debe responderlas y archivarlas por ley.</p>
+        <button type="button" class="boton boton-peligro" id="abrir-eliminar"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-trash-2"></use></svg>Eliminar mi cuenta</button>
+      </section>
+
+      <!-- Corregir documento: pide contraseña, el número dos veces y el motivo -->
+      <dialog class="modal" id="modal-documento" aria-labelledby="t-documento" style="width:min(620px,calc(100vw - 24px))">
+        <div class="modal-cabecera">
+          <h2 id="t-documento">Corregir datos del documento</h2>
+          <button type="button" class="cerrar" data-cerrar aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-x"></use></svg></button>
+        </div>
+        <form class="modal-cuerpo formulario" id="form-documento" novalidate>
+          <div id="info-documento"></div>
+          <div class="rejilla">
+            <div class="campo">
+              <label for="d-tipo_documento">Tipo de documento<span class="obligatorio" aria-hidden="true">*</span></label>
+              <select id="d-tipo_documento" name="tipo_documento" required>
+                <option value="CC">Cédula de ciudadanía</option>
+                <option value="CE">Cédula de extranjería</option>
+                <option value="TI">Tarjeta de identidad</option>
+                <option value="PA">Pasaporte</option>
+              </select>
+              <span class="error-campo" aria-live="polite"></span>
+            </div>
+            <div class="campo">
+              <label for="d-fecha_expedicion">Fecha de expedición<span class="obligatorio" aria-hidden="true">*</span></label>
+              <input type="date" id="d-fecha_expedicion" name="fecha_expedicion" required>
+              <span class="error-campo" aria-live="polite"></span>
+            </div>
+            <div class="campo">
+              <label for="d-cedula">Número de documento<span class="obligatorio" aria-hidden="true">*</span></label>
+              <input id="d-cedula" name="cedula" inputmode="numeric" maxlength="10" autocomplete="off" required>
+              <span class="ayuda">Solo números, sin puntos.</span>
+              <span class="error-campo" aria-live="polite"></span>
+            </div>
+            <div class="campo">
+              <label for="d-confirmar_cedula">Repita el número<span class="obligatorio" aria-hidden="true">*</span></label>
+              <input id="d-confirmar_cedula" name="confirmar_cedula" inputmode="numeric" maxlength="10" autocomplete="off" required>
+              <span class="ayuda">Para evitar un nuevo error de digitación.</span>
+              <span class="error-campo" aria-live="polite"></span>
+            </div>
+            <div class="campo ocupa-todo">
+              <label for="d-motivo">Motivo de la corrección<span class="obligatorio" aria-hidden="true">*</span></label>
+              <textarea id="d-motivo" name="motivo" maxlength="300" rows="2" required placeholder="Ej.: Al registrarme escribí mal un dígito de la cédula."></textarea>
+              <span class="error-campo" aria-live="polite"></span>
+            </div>
+            <div class="campo ocupa-todo">
+              <label for="d-password">Su contraseña actual<span class="obligatorio" aria-hidden="true">*</span></label>
+              <input type="password" id="d-password" name="password_actual" autocomplete="current-password" required>
+              <span class="ayuda">Confirmamos que es usted antes de cambiar un dato de identificación.</span>
+              <span class="error-campo" aria-live="polite"></span>
+            </div>
+          </div>
+          <div id="mensaje-documento"></div>
+          <div class="acciones acciones-entre">
+            <button type="button" class="boton boton-secundario" data-cerrar>Cancelar</button>
+            <button type="submit" class="boton" id="guardar-documento" data-cargando="Verificando…">Guardar corrección</button>
+          </div>
+        </form>
+      </dialog>
+
+      <!-- Eliminar cuenta: pide contraseña y escribir ELIMINAR -->
+      <dialog class="modal" id="modal-eliminar" aria-labelledby="t-modal-eliminar" style="width:min(560px,calc(100vw - 24px))">
+        <div class="modal-cabecera">
+          <h2 id="t-modal-eliminar">¿Eliminar su cuenta?</h2>
+          <button type="button" class="cerrar" data-cerrar aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="/img/iconos.svg#i-x"></use></svg></button>
+        </div>
+        <form class="modal-cuerpo formulario" id="form-eliminar" novalidate>
+          <img src="/img/ilustracion-eliminar.svg" alt="" width="120" height="96" style="margin:0 auto 16px">
+          <ul class="lista-consecuencias">
+            <li><strong>Se borra:</strong> su usuario, su contraseña y el acceso a "Mis solicitudes".</li>
+            <li id="consecuencia-datos"><strong>Sus datos personales:</strong> si nunca radicó solicitudes, también se borran.</li>
+            <li><strong>Se conserva:</strong> cada solicitud radicada, con sus datos, porque la entidad debe responderla y archivarla (Ley 1755 de 2015). Podrá seguir consultándolas con el radicado y su cédula.</li>
+            <li><strong>Si vuelve:</strong> puede crear una cuenta nueva con la misma cédula y fecha de expedición, y sus solicitudes se le vincularán otra vez.</li>
+          </ul>
+          <div class="campo">
+            <label for="e-confirmacion">Escriba <strong>ELIMINAR</strong> para confirmar<span class="obligatorio" aria-hidden="true">*</span></label>
+            <input id="e-confirmacion" name="confirmacion" autocomplete="off" required>
+            <span class="error-campo" aria-live="polite"></span>
+          </div>
+          <div class="campo">
+            <label for="e-password">Su contraseña<span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="password" id="e-password" name="password_actual" autocomplete="current-password" required>
+            <span class="error-campo" aria-live="polite"></span>
+          </div>
+          <div id="mensaje-eliminar"></div>
+          <div class="acciones acciones-entre">
+            <button type="button" class="boton boton-secundario" data-cerrar>Cancelar</button>
+            <button type="submit" class="boton boton-peligro-lleno" id="confirmar-eliminar" data-cargando="Eliminando…">Eliminar definitivamente</button>
+          </div>
+        </form>
+      </dialog>
     </div>
     <div style="height:72px"></div>
   </main>

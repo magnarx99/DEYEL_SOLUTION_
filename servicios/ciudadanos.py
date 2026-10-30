@@ -1,10 +1,12 @@
 """Ciudadano: captura única de datos y reconocimiento por cédula (principio de una sola vez)."""
+import re
 import sqlite3
 
 from nucleo import bd, claves, tiempo, web
+from servicios import auditoria
 from utilidades.enmascarar import ciudadano_enmascarado
 from utilidades.errores import ErrorApp
-from utilidades.validaciones import validar_ciudadano
+from utilidades.validaciones import CEDULA_RE, coincide, es_fecha_valida, validar_ciudadano
 
 COLUMNAS = """c.id_ciudadano, c.tipo_documento, c.cedula, c.fecha_expedicion, c.nombres, c.apellidos,
   c.fecha_nacimiento, c.sexo, c.grupo_poblacional, c.municipio, c.barrio, c.direccion, c.telefono,
@@ -63,7 +65,7 @@ def crear(entrada):
 
 
 def actualizar(id_ciudadano, entrada):
-    """Actualiza datos personales y de contacto (la cédula y la fecha de expedición no cambian)."""
+    """Actualiza datos personales y de contacto. El documento se cambia aparte, con corregir_documento()."""
     d, errores = validar_ciudadano(entrada, parcial=True)
     if d['municipio'] and not validar_municipio(d['municipio']):
         errores['municipio'] = 'Seleccione un municipio de la lista.'
@@ -78,6 +80,75 @@ def actualizar(id_ciudadano, entrada):
          tiempo.ahora(), id_ciudadano))
     if not cambios:
         raise ErrorApp(404, 'Ciudadano no encontrado.')
+
+
+MAX_CORRECCIONES = 2          # por año
+TIPOS_DOCUMENTO = {'CC': 'Cédula de ciudadanía', 'CE': 'Cédula de extranjería', 'TI': 'Tarjeta de identidad', 'PA': 'Pasaporte'}
+
+
+def correcciones_recientes(id_ciudadano):
+    """Correcciones del documento hechas en los últimos 365 días."""
+    hace_un_anio = tiempo.sumar_dias_calendario(tiempo.hoy(), -365)
+    return bd.uno('SELECT COUNT(*) AS n FROM ciudadano_correccion WHERE id_ciudadano = ? AND substr(fecha, 1, 10) > ?',
+                  (id_ciudadano, hace_un_anio))['n']
+
+
+def corregir_documento(id_ciudadano, entrada):
+    """Corrige el tipo, el número o la fecha de expedición del documento cuando se digitaron mal.
+    Medidas de seguridad (además de pedir la contraseña antes de llegar aquí):
+    - el número nuevo se escribe dos veces y se explica el motivo;
+    - máximo 2 correcciones al año (más de eso exige una solicitud de datos personales con copia del documento);
+    - no se puede tomar un número que ya pertenece a otra persona registrada;
+    - se guarda el valor anterior y el nuevo (ciudadano_correccion) y queda en la bitácora de auditoría;
+    - se avisa al correo registrado, por si no fue el titular quien hizo el cambio."""
+    c = buscar_por_id(id_ciudadano)
+    if not c:
+        raise ErrorApp(404, 'Ciudadano no encontrado.')
+    limpio = lambda v: re.sub(r'[\s.\-]', '', str(v or ''))  # noqa: E731
+    tipo = str(entrada.get('tipo_documento') or '').strip()
+    cedula, confirmar = limpio(entrada.get('cedula')), limpio(entrada.get('confirmar_cedula'))
+    expedicion = str(entrada.get('fecha_expedicion') or '').strip()
+    motivo = re.sub(r'\s+', ' ', str(entrada.get('motivo') or '')).strip()
+
+    e = {}
+    if tipo not in TIPOS_DOCUMENTO:
+        e['tipo_documento'] = 'Tipo de documento no válido.'
+    if not coincide(CEDULA_RE, cedula):
+        e['cedula'] = 'El documento debe tener de 6 a 10 dígitos, sin puntos ni espacios.'
+    elif cedula != confirmar:
+        e['confirmar_cedula'] = 'Los dos números no coinciden.'
+    if not es_fecha_valida(expedicion, pasada=True):
+        e['fecha_expedicion'] = 'Indique una fecha de expedición válida (no puede ser futura).'
+    elif c['fecha_nacimiento'] and expedicion < c['fecha_nacimiento']:
+        e['fecha_expedicion'] = 'La fecha de expedición no puede ser anterior a su fecha de nacimiento.'
+    if not 10 <= len(motivo) <= 300:
+        e['motivo'] = 'Explique brevemente el motivo (entre 10 y 300 caracteres).'
+    if e:
+        raise ErrorApp(400, 'Revise los campos marcados.', e)
+    if (tipo, cedula, expedicion) == (c['tipo_documento'], c['cedula'], c['fecha_expedicion']):
+        raise ErrorApp(400, 'Los datos son iguales a los que ya tiene registrados: no hay nada que corregir.')
+    if correcciones_recientes(id_ciudadano) >= MAX_CORRECCIONES:
+        raise ErrorApp(403, f'Ya corrigió los datos de su documento {MAX_CORRECCIONES} veces en el último año. Para otra corrección, '
+                            'radique una "Solicitud de datos personales" adjuntando una copia de su documento.')
+    if cedula != c['cedula'] and buscar_por_cedula(cedula):
+        raise ErrorApp(409, 'Ese número de documento ya está registrado a nombre de otra persona. Radique una "Solicitud de '
+                            'datos personales" adjuntando una copia de su documento para que la entidad lo revise.',
+                       {'cedula': 'Número ya registrado.'})
+
+    ahora = tiempo.ahora()
+    with bd.transaccion():
+        bd.ejecutar('UPDATE ciudadano SET tipo_documento = ?, cedula = ?, fecha_expedicion = ?, fecha_actualizacion = ? WHERE id_ciudadano = ?',
+                    (tipo, cedula, expedicion, ahora, id_ciudadano))
+        bd.insertar("""INSERT INTO ciudadano_correccion (id_ciudadano, tipo_anterior, cedula_anterior, expedicion_anterior,
+                         tipo_nuevo, cedula_nueva, expedicion_nueva, motivo, ip, fecha) VALUES (?,?,?,?,?,?,?,?,?,?)""",
+                    (id_ciudadano, c['tipo_documento'], c['cedula'], c['fecha_expedicion'], tipo, cedula, expedicion,
+                     motivo, web.ip_actual(), ahora))
+        auditoria.registrar('CORREGIR_DOCUMENTO', f"Ciudadano #{id_ciudadano}: {c['tipo_documento']} {c['cedula']} "
+                            f"(exp. {c['fecha_expedicion']}) → {tipo} {cedula} (exp. {expedicion}). Motivo: {motivo}")
+    if c['correo']:   # en producción aquí se enviaría un correo electrónico
+        print(f"\n[AVISO DE SEGURIDAD] Para {c['correo']}: se corrigieron los datos del documento de su cuenta "
+              f'({ahora}). Si no fue usted, cambie su contraseña y comuníquese con la entidad.\n', flush=True)
+    return buscar_por_id(id_ciudadano)
 
 
 def emitir_token_verificacion(id_ciudadano):

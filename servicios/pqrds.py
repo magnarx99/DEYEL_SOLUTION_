@@ -69,9 +69,13 @@ def _validar_caso(cuerpo, tipo):
     if caso['medio_respuesta'] not in ('CORREO', 'FISICO', 'NINGUNO'):
         e['medio_respuesta'] = 'Seleccione cómo quiere recibir la respuesta.'
     if tipo['codigo'] == 'CITA':
-        manana = tiempo.sumar_dias_calendario(tiempo.hoy(), 1)
-        if not es_fecha_valida(caso['fecha_cita_preferida']) or caso['fecha_cita_preferida'] < manana:
-            e['fecha_cita_preferida'] = 'Elija una fecha a partir de mañana.'
+        # La entidad tiene hasta N días hábiles para responder: la cita solo puede ser después de ese plazo
+        minima = fechas.fecha_minima_cita(tipo['dias_habiles_respuesta'])
+        if not es_fecha_valida(caso['fecha_cita_preferida']) or caso['fecha_cita_preferida'] < minima:
+            e['fecha_cita_preferida'] = (f"La entidad tiene hasta {tipo['dias_habiles_respuesta']} días hábiles para responder. "
+                                         f'Elija una fecha desde el {fechas.legible(minima)}.')
+        elif not fechas.es_dia_habil(caso['fecha_cita_preferida']):
+            e['fecha_cita_preferida'] = 'Elija un día hábil (de lunes a viernes, sin festivos).'
         if caso['modalidad_cita'] not in ('PRESENCIAL', 'VIRTUAL'):
             e['modalidad_cita'] = 'Indique si prefiere la cita presencial o virtual.'
     else:

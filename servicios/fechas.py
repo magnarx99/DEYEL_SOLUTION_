@@ -20,6 +20,26 @@ def _es_habil(dia, festivos):
     return dia.weekday() < 5 and dia.isoformat() not in festivos   # weekday: 5 = sábado, 6 = domingo
 
 
+def es_dia_habil(fecha):
+    """True si 'AAAA-MM-DD' es de lunes a viernes y no es festivo."""
+    return _es_habil(date.fromisoformat(fecha), obtener_festivos())
+
+
+MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+
+
+def legible(fecha):
+    """'2026-11-09' -> '9 de noviembre de 2026'."""
+    d = date.fromisoformat(fecha)
+    return f'{d.day} de {MESES[d.month - 1]} de {d.year}'
+
+
+def fecha_minima_cita(dias_respuesta):
+    """Primera fecha en que se puede agendar una cita: el día hábil siguiente al plazo de respuesta.
+    Así la dependencia alcanza a revisar la solicitud y confirmar la cita antes de que llegue el día."""
+    return sumar_dias_habiles(tiempo.hoy(), dias_respuesta + 1)
+
+
 def sumar_dias_habiles(fecha_inicio, dias):
     """Suma N días hábiles a 'AAAA-MM-DD' y devuelve la fecha límite 'AAAA-MM-DD'."""
     festivos = obtener_festivos()

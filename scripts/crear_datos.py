@@ -25,6 +25,13 @@ SIN_PREGUNTAR = '--si' in sys.argv
 
 azar = random.Random(20261026)   # semilla fija: los datos de prueba son siempre los mismos
 
+FUNCIONARIOS = [   # nombre, correo, dependencia (también los usa scripts/crear_funcionarios.py)
+    ('Carolina Mesa Ruiz', 'funcionario.ciudadania@antioquia.example', 'Atención a la Ciudadanía'),
+    ('Santiago Herrera Gil', 'funcionario.salud@antioquia.example', 'Secretaría de Salud y Protección Social'),
+    ('Paula Andrea Duque', 'funcionario.educacion@antioquia.example', 'Secretaría de Educación'),
+]
+CLAVE_FUNCIONARIOS = 'Funcionario2026*'
+
 CIUDADANOS = [
     # cédula, nombres, apellidos, municipio, barrio, celular, correo, sexo, grupo
     ('1017234567', 'María Fernanda', 'Restrepo Gómez', 'Medellín', 'Laureles', '3001234521', 'maria.restrepo@correo.example', 'FEMENINO', 'NINGUNO'),
@@ -106,6 +113,7 @@ def main():
     bd.ejecutar_script((configuracion.CARPETA_BD / 'schema.sql').read_text(encoding='utf-8'))
     print('2/5 Cargando catálogos (municipios, dependencias, tipos, festivos, preguntas frecuentes)...')
     bd.ejecutar_script((configuracion.CARPETA_BD / 'datos_iniciales.sql').read_text(encoding='utf-8'))
+    bd.migrar()
 
     with bd.transaccion():
         deps = {d['nombre']: d['id_dependencia'] for d in bd.consultar('SELECT id_dependencia, nombre FROM dependencia')}
@@ -121,12 +129,11 @@ def main():
             print('\nBase de datos VACÍA lista en database/pqrds.db, para empezar a cargar información real.')
             print(f'  Administrador: {configuracion.ADMIN_CORREO} / {configuracion.ADMIN_PASSWORD} (se pide cambiarla al entrar)')
             print('  Los funcionarios se crean desde el panel: Usuarios > Nuevo usuario.')
+            print('  (O agregue los funcionarios de prueba sin borrar nada: python scripts/crear_funcionarios.py)')
             return
-        clave_funcionario = claves.resumir_password('Funcionario2026*')
+        clave_funcionario = claves.resumir_password(CLAVE_FUNCIONARIOS)
         funcionarios = []
-        for nombre, correo, dependencia in [('Carolina Mesa Ruiz', 'funcionario.ciudadania@antioquia.example', 'Atención a la Ciudadanía'),
-                                            ('Santiago Herrera Gil', 'funcionario.salud@antioquia.example', 'Secretaría de Salud y Protección Social'),
-                                            ('Paula Andrea Duque', 'funcionario.educacion@antioquia.example', 'Secretaría de Educación')]:
+        for nombre, correo, dependencia in FUNCIONARIOS:
             id_f = bd.insertar("""INSERT INTO usuario (nombre, correo, password_hash, rol, id_dependencia, fecha_creacion)
                                   VALUES (?, ?, ?, 'FUNCIONARIO', ?, ?)""", (nombre, correo, clave_funcionario, deps[dependencia], texto_ahora))
             funcionarios.append({'id_usuario': id_f, 'id_dependencia': deps[dependencia]})
@@ -180,7 +187,8 @@ def main():
             funcionario = next((f for f in funcionarios if f['id_dependencia'] == dependencia), None)
             respondida = estado in ('RESPONDIDA', 'CERRADA')
             medio = 'NINGUNO' if anonima else ('CORREO' if ciudadano['correo'] else 'FISICO')
-            cita = (momento + timedelta(days=7)).date().isoformat() if codigo == 'CITA' else None
+            # La cita va después del plazo de respuesta (día hábil siguiente), igual que en el portal
+            cita = sumar_dias_habiles(fecha, tipo['dias_habiles_respuesta'] + 1) if codigo == 'CITA' else None
             id_p = bd.insertar(
                 """INSERT INTO pqrds (radicado, id_ciudadano, id_tipo, id_dependencia, id_funcionario_asignado, canal, municipio_hecho,
                      asunto, descripcion, medio_respuesta, fecha_cita_preferida, modalidad_cita, estado, es_anonima, codigo_anonimo,
@@ -206,7 +214,7 @@ def main():
     bd.cerrar()
     print('\nBase de datos lista en database/pqrds.db. Usuarios de prueba:')
     print(f'  Administrador: {configuracion.ADMIN_CORREO} / {configuracion.ADMIN_PASSWORD} (se pide cambiarla al entrar)')
-    print('  Funcionario:   funcionario.ciudadania@antioquia.example / Funcionario2026*')
+    print(f'  Funcionario:   funcionario.ciudadania@antioquia.example / {CLAVE_FUNCIONARIOS}')
     print('  Ciudadana:     cédula 1017234567 o maria.restrepo@correo.example / Ciudadano2026*')
 
 

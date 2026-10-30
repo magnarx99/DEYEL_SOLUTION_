@@ -2,8 +2,9 @@
 from nucleo import bd, tiempo, web
 
 
-def registrar(accion, detalle=None):
-    usuario = web.usuario_actual()
+def registrar(accion, detalle=None, sin_usuario=False):
+    """sin_usuario=True cuando la cuenta de quien actúa acaba de eliminarse (ya no se puede referenciar)."""
+    usuario = None if sin_usuario else web.usuario_actual()
     bd.insertar('INSERT INTO auditoria (id_usuario, accion, detalle, ip, fecha) VALUES (?, ?, ?, ?, ?)',
                 (usuario['id_usuario'] if usuario else None, accion, detalle, web.ip_actual(), tiempo.ahora()))
 

@@ -2,7 +2,7 @@
 import re
 
 from nucleo import bd
-from servicios import chatbot
+from servicios import chatbot, fechas
 from utilidades.errores import ErrorApp
 from utilidades.validaciones import texto
 
@@ -17,6 +17,14 @@ def catalogos():
         _cache['dependencias'] = bd.consultar('SELECT id_dependencia, nombre FROM dependencia ORDER BY nombre')
         _cache['municipios'] = [m['nombre'] for m in bd.consultar('SELECT nombre FROM municipio ORDER BY nombre')]
     return _cache
+
+
+def reglas_cita():
+    """Fecha mínima para agendar citas y festivos (cambian con el día: no se guardan en memoria)."""
+    tipo = bd.uno("SELECT dias_habiles_respuesta FROM tipo_solicitud WHERE codigo = 'CITA'")
+    dias = tipo['dias_habiles_respuesta'] if tipo else 5
+    return {'dias_habiles': dias, 'fecha_minima': fechas.fecha_minima_cita(dias),
+            'festivos': sorted(fechas.obtener_festivos())}
 
 
 def _validar_faq(e):

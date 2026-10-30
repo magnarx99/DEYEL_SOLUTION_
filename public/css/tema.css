@@ -170,3 +170,9 @@ dialog.modal { border-radius: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .chatbot-saludo, .chatbot-ventana { animation: none; } }
 @media (max-width: 680px) { .chatbot-boton .en-linea { display: inline-flex !important; } }
+
+/* ---------- Ilustraciones en cajas centradas (contraseñas, errores) ---------- */
+.imagen-caja { margin: 0 auto var(--e-4); height: auto; }
+.caja-auth .formulario .imagen-caja { margin-left: 0; }
+@media (max-width: 700px) { .solo-escritorio { display: none; } }
+@media print { .cabecera-ilustrada img { display: none; } }

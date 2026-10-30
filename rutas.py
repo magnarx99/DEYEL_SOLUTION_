@@ -73,6 +73,20 @@ def restablecer(p):
     return {'mensaje': 'Contraseña actualizada. Ya puede iniciar sesión.'}
 
 
+# Límite general por IP; los errores de contraseña además bloquean la cuenta (ver autenticacion.confirmar_password)
+CONFIRMAR_PASSWORD = (20, 15, 'Demasiados intentos. Espere 15 minutos.')
+
+
+@api.ruta('POST', '/api/auth/eliminar-cuenta')
+@limite(*CONFIRMAR_PASSWORD, grupo='confirmar_password')
+@requerir_sesion
+def eliminar_cuenta(p):
+    datos = p.json()
+    r = Respuesta.json(autenticacion.eliminar_cuenta(p.usuario, datos.get('password'), datos.get('confirmacion')))
+    sesion.cerrar(r)
+    return r
+
+
 @api.ruta('POST', '/api/auth/cambiar-password')
 @requerir_sesion
 def cambiar_password(p):
@@ -84,7 +98,7 @@ def cambiar_password(p):
 # ====================================================================== catálogos
 @api.ruta('GET', '/api/catalogos')
 def ver_catalogos(p):
-    return catalogos.catalogos()
+    return {**catalogos.catalogos(), 'cita': catalogos.reglas_cita()}
 
 
 # ====================================================================== ciudadanos (reconocimiento por cédula)
@@ -130,6 +144,23 @@ def actualizar_ciudadano(p):
     ciudadanos.actualizar(id_ciudadano, p.json())
     auditoria.registrar('ACTUALIZAR_CIUDADANO', f'Ciudadano #{id_ciudadano}')
     return {'actualizado': True, 'ciudadano': ciudadanos.buscar_por_id(id_ciudadano)}
+
+
+@api.ruta('GET', '/api/ciudadanos/yo/documento')
+@permitir('CIUDADANO')
+def estado_documento(p):
+    """Cuántas correcciones del documento le quedan al ciudadano este año."""
+    usadas = ciudadanos.correcciones_recientes(p.usuario['id_ciudadano'])
+    return {'usadas': usadas, 'maximo': ciudadanos.MAX_CORRECCIONES, 'disponibles': max(ciudadanos.MAX_CORRECCIONES - usadas, 0)}
+
+
+@api.ruta('POST', '/api/ciudadanos/yo/documento')
+@limite(*CONFIRMAR_PASSWORD, grupo='confirmar_password')
+@permitir('CIUDADANO')
+def corregir_documento(p):
+    datos = p.json()
+    autenticacion.confirmar_password(p.usuario['id_usuario'], datos.get('password'))
+    return {'actualizado': True, 'ciudadano': ciudadanos.corregir_documento(p.usuario['id_ciudadano'], datos)}
 
 
 # ====================================================================== PQRDS

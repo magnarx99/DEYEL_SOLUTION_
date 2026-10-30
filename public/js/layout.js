@@ -1,6 +1,6 @@
 // Estructura común de todas las páginas: encabezado institucional, menú según el rol,
 // migas de pan, pie de página y asistente virtual.
-import { api, esc, icono, sesion } from './api.js';
+import { api, esc, icono, sesion, toast } from './api.js';
 import { iniciarChatbot, abrirChatbot } from './chatbot.js';
 
 const cuerpo = document.body;
@@ -117,6 +117,12 @@ export const listo = (async () => {
   pintarEncabezado(s);
   pintarMigas();
   pintarPie();
+  // Mensaje que dejó la página anterior antes de redirigir (p. ej. "Su cuenta fue eliminada")
+  const pendiente = sessionStorage.getItem('pqrds_aviso');
+  if (pendiente) {
+    sessionStorage.removeItem('pqrds_aviso');
+    toast(pendiente, 9000);
+  }
   if (!('sinChat' in cuerpo.dataset) && !(s.autenticado && s.usuario.rol !== 'CIUDADANO')) iniciarChatbot();
   return s;
 })();

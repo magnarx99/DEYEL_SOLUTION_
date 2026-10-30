@@ -95,5 +95,10 @@ def ejecutar_script(texto_sql):
     conexion().executescript(texto_sql)
 
 
+def migrar():
+    """Aplica database/migraciones.sql: agrega a una base existente lo nuevo sin borrar datos."""
+    ejecutar_script((configuracion.CARPETA_BD / 'migraciones.sql').read_text(encoding='utf-8'))
+
+
 def existe_base():
     return configuracion.RUTA_BD.exists() and configuracion.RUTA_BD.stat().st_size > 0

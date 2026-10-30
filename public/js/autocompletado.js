@@ -7,7 +7,7 @@ import {
 } from './api.js';
 import {
   CEDULA_REGEX, soloDigitos, validarGrupo, validacionEnVivo, contador, bloqueIdentificacion, bloquePersonal,
-  bloqueContacto, bloqueAutorizacion, cargarMunicipios, leerCiudadano, rellenar,
+  bloqueContacto, bloqueAutorizacion, cargarMunicipios, leerCiudadano, rellenar, configurarCita,
 } from './formularios.js';
 
 const form = $('#form-radicar');
@@ -281,6 +281,7 @@ function actualizarTipo() {
   estado.tipo = t;
   $('#plazo-tipo').textContent = t ? `Respuesta en máximo ${t.dias_habiles_respuesta} días hábiles.` : '';
   $('#caja-cita').hidden = t?.codigo !== 'CITA';
+  $('#imagen-tipo').src = t?.codigo === 'CITA' ? '/img/ilustracion-cita.svg' : '/img/ilustracion-radicar.svg';
   $('#titulo').textContent = t ? `Radicar: ${t.nombre}` : 'Radicar solicitud';
   document.title = `${t ? t.nombre : 'Radicar solicitud'} | PQRDS Gobernación de Antioquia`;
 }
@@ -482,8 +483,10 @@ function registrarOtra() {
   $('#f-tipo').value = tipo.codigo;
   llenarSelect($('#f-id_dependencia'), cat.dependencias, { vacio: 'No sé, que la entidad la asigne', valor: (d) => d.id_dependencia, texto: (d) => d.nombre });
   llenarSelect($('#f-municipio_hecho'), cat.municipios, { vacio: 'Seleccione el municipio' });
-  const manana = new Date(Date.now() + 86400000);
-  $('#f-fecha_cita_preferida').min = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Bogota' }).format(manana);
+  configurarCita(cat.cita);
+  $('#f-fecha_cita_preferida').min = cat.cita.fecha_minima;
+  $('#ayuda-cita').textContent = `La entidad tiene hasta ${cat.cita.dias_habiles} días hábiles para responder, por eso la cita `
+    + `puede ser desde el ${fecha(cat.cita.fecha_minima)} (solo días hábiles). La dependencia le confirmará la fecha y la hora.`;
   actualizarTipo();
 
   contador($('#f-asunto'), $('#cont-asunto'));

@@ -151,7 +151,9 @@ def iniciar():
     if not bd.existe_base():
         print('Aún no existe la base de datos. Ejecute primero:  python scripts/crear_datos.py')
         sys.exit(1)
-    servidor = ThreadingHTTPServer(('127.0.0.1', configuracion.PUERTO), Manejador)
+    bd.migrar()        # pone al día una base creada con una versión anterior (no borra nada)
+    bd.cerrar()
+    servidor =ThreadingHTTPServer(('127.0.0.1', configuracion.PUERTO), Manejador)
     servidor.daemon_threads = True
     print(f'Portal PQRDS en http://localhost:{configuracion.PUERTO}')
     if not configuracion.LLM_API_KEY:

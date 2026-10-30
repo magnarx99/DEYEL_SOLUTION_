@@ -33,6 +33,28 @@ En macOS/Linux use `python3` en lugar de `python`.
 | Funcionario | funcionario.ciudadania@antioquia.example | Funcionario2026* |
 | Ciudadano | 1017234567 (cédula) | Ciudadano2026* |
 
+Los funcionarios y la ciudadana de prueba **solo existen si la base se creó con datos de prueba**
+(`python scripts/crear_datos.py`). Una base creada con `--vacia` solo trae el administrador.
+Para agregar los funcionarios de prueba a una base que ya tiene datos, **sin borrar nada**:
+```bash
+python scripts/crear_funcionarios.py
+```
+El funcionario entra con su **correo** (no con cédula). También puede crear funcionarios desde el panel del
+administrador: *Usuarios > Nuevo usuario*.
+
+## Reglas de la cuenta del ciudadano
+- **Citas:** la entidad tiene hasta 5 días hábiles para responder, así que la cita solo se puede pedir para un
+  día hábil (lunes a viernes, sin festivos) **después** de ese plazo.
+- **Corregir el documento** (*Mi cuenta > Corregir*): permite cambiar el tipo, el número y la fecha de expedición si se
+  digitaron mal. Pide la contraseña, el número dos veces y el motivo; máximo 2 correcciones al año; no deja tomar un
+  número que ya es de otra persona; guarda el valor anterior (tabla `ciudadano_correccion`) y queda en la auditoría.
+- **Eliminar la cuenta** (*Mi cuenta > Eliminar mi cuenta*): pide la contraseña y escribir ELIMINAR. Borra el usuario;
+  si la persona no tiene solicitudes también borra sus datos. Si tiene solicitudes, estas se conservan (la entidad
+  debe responderlas y archivarlas) y se pueden seguir consultando con el radicado y la cédula.
+- Cinco contraseñas erradas seguidas (al iniciar sesión, corregir el documento o eliminar la cuenta) bloquean la cuenta 15 minutos.
+
+Al encender el portal se aplica `database/migraciones.sql`, que agrega a una base antigua lo nuevo **sin borrar datos**.
+
 ## Empezar a cargar datos reales
 ```bash
 python scripts/crear_datos.py --vacia   # base limpia: solo catálogos y el administrador (una sola vez)

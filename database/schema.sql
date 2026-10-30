@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS pqrds_historial;
 DROP TABLE IF EXISTS pqrds_adjunto;
 DROP TABLE IF EXISTS pqrds;
 DROP TABLE IF EXISTS consecutivo_radicado;
+DROP TABLE IF EXISTS ciudadano_correccion;
 DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS ciudadano;
 DROP TABLE IF EXISTS tipo_solicitud;
@@ -73,6 +74,23 @@ CREATE TABLE ciudadano (
   fecha_creacion           TEXT NOT NULL,
   fecha_actualizacion      TEXT NOT NULL
 );
+
+-- Historial de correcciones del documento (número, tipo o fecha de expedición).
+-- Guarda el valor anterior y el nuevo para poder revisar o revertir un cambio.
+CREATE TABLE ciudadano_correccion (
+  id_correccion       INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_ciudadano        INTEGER NOT NULL REFERENCES ciudadano(id_ciudadano) ON DELETE CASCADE,
+  tipo_anterior       TEXT NOT NULL,
+  cedula_anterior     TEXT NOT NULL,
+  expedicion_anterior TEXT NOT NULL,
+  tipo_nuevo          TEXT NOT NULL,
+  cedula_nueva        TEXT NOT NULL,
+  expedicion_nueva    TEXT NOT NULL,
+  motivo              TEXT NOT NULL,
+  ip                  TEXT,
+  fecha               TEXT NOT NULL
+);
+CREATE INDEX idx_correccion_ciudadano ON ciudadano_correccion(id_ciudadano, fecha);
 
 -- ---------------------------------------------------------------------
 -- Usuarios del sistema (ciudadanos con cuenta, funcionarios y administradores)

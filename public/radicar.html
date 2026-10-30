@@ -14,9 +14,12 @@
 <body data-pagina="radicar" data-migas='[["Inicio","/"],["PQRDS","/pqrds.html"],["Radicar solicitud"]]'>
   <main id="contenido">
     <div class="contenedor contenedor-angosto">
-      <div class="cabecera-pagina">
-        <h1 id="titulo">Radicar solicitud</h1>
-        <p id="subtitulo">Complete los tres pasos. Los campos con <span class="obligatorio">*</span> son obligatorios.</p>
+      <div class="cabecera-pagina cabecera-ilustrada">
+        <div>
+          <h1 id="titulo">Radicar solicitud</h1>
+          <p id="subtitulo">Complete los tres pasos. Los campos con <span class="obligatorio">*</span> son obligatorios.</p>
+        </div>
+        <img id="imagen-tipo" src="/img/ilustracion-radicar.svg" alt="" width="150" height="120">
       </div>
 
       <div class="pasos no-imprimir" id="pasos">
@@ -109,7 +112,7 @@
               <div class="campo">
                 <label for="f-fecha_cita_preferida">Fecha preferida<span class="obligatorio" aria-hidden="true">*</span></label>
                 <input type="date" id="f-fecha_cita_preferida" name="fecha_cita_preferida">
-                <span class="ayuda">La dependencia le confirmará la fecha y la hora.</span>
+                <span class="ayuda" id="ayuda-cita">La dependencia le confirmará la fecha y la hora.</span>
                 <span class="error-campo"></span>
               </div>
               <div class="campo">
